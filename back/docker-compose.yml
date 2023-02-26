@@ -1,0 +1,59 @@
+version: "3"
+services:
+  api-gateway:
+    container_name: api_container
+    build:
+      context: "."
+      dockerfile: "./api-gateway/Dockerfile"
+    depends_on:
+      - backend-service
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./api-gateway:/opt/app
+    restart: always
+
+  backend-service:
+    container_name: backend_container
+    build:
+      context: "."
+      dockerfile: "./backend-service/Dockerfile"
+    depends_on:
+      - db_service
+    ports:
+      - "7101:7101"
+    volumes:
+      - ./backend-service:/opt/app
+    restart: always
+
+  db_service:
+    container_name: db_container
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: risell
+      PGDATA: /data/postgres
+    volumes:
+       - pgdata:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nb15guille@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: always
+
+volumes:
+  pgadmin:
+  pgdata:
+    driver: local
