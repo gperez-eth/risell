@@ -7,7 +7,7 @@ import { Logger } from 'nestjs-pino';
 async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
   app.useLogger(app.get(Logger));
-
+  app.enableCors();
   app.useGlobalPipes(
     // it is applied to every route handler across the entire application
     new ValidationPipe({
@@ -29,7 +29,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
   await app.listen(ApiModule.port);
 }
 bootstrap();

@@ -8,7 +8,7 @@ import {
 @Entity('products')
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  productId: string;
 
   @Column()
   title: string;
@@ -31,7 +31,7 @@ export class ProductEntity {
   @Column()
   isAuction: boolean;
 
-  @Column({ type: 'money' })
+  @Column({ type: 'bigint' })
   price: bigint;
 
   @Column('char', { length: 36 })

@@ -1,14 +1,28 @@
+import { PaginationQueryDto, SharedService } from '@app/shared';
 import { Controller, Inject } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
-import { PaginationQueryDto } from './dto/pagination-query.dto';
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 import { ProductsService } from './products.service';
 
 @Controller()
 export class ProductsController {
-  constructor(private readonly productService: ProductsService) {}
+  constructor(
+    @Inject('ProductServiceInterface')
+    private readonly productService: ProductsService,
+    @Inject('SharedServiceInterface')
+    private readonly sharedService: SharedService,
+  ) {}
 
   @MessagePattern({ cmd: 'ms-get-products' })
-  async getProductsHomeList(pagination: PaginationQueryDto) {
+  async getProductsHomeList(
+    @Ctx() context: RmqContext,
+    @Payload() pagination: PaginationQueryDto,
+  ) {
+    this.sharedService.acknowledgeMessage(context);
     return await this.productService.getProductsHomeList(pagination);
   }
 }

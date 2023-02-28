@@ -14,3 +14,9 @@ export * from './entities/product.entity';
 
 //export repositories
 export * from './repositories/products.repository';
+
+// export interfaces
+export * from './interfaces/products.repository.interface';
+
+// export dto
+export * from './dto/pagination-query.dto';

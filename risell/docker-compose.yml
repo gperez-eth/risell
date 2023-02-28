@@ -12,6 +12,36 @@ services:
     env_file:
       - .env
 
+  products:
+    build:
+      context: ./
+      dockerfile: ./apps/products/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - postgres
+    volumes:
+      - .:/usr/src/app # any change to base folder should be reflected
+      - /usr/src/app/node_modules
+    command: npm run start:dev products # overrides CMD from dockerfile
+
+  api:
+    build:
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
+    ports:
+      - '4000:5000'
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - products
+    volumes:
+      - .:/usr/src/app # any change to base folder should be reflected
+      - /usr/src/app/node_modules
+    command: npm run start:dev api
+
   postgres:
     image: postgres:latest
     env_file:

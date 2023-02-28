@@ -1,16 +1,22 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Controller, Get, Inject, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
-import { RsGetProductsDto } from './dto';
 
-/* ------------------------------------------------*/
-
-@Controller('products')
+@Controller()
 export class ProductsController {
-  constructor(@Inject('RABBIT_SERVICE_PRODUCTS') private client: ClientProxy) {}
+  constructor(
+    @Inject('PRODUCTS_SERVICE') private readonly productService: ClientProxy,
+  ) {}
 
-  @Get()
-  async getProducts(): Promise<Observable<RsGetProductsDto>> {
-    return this.client.send<RsGetProductsDto>({ cmd: 'ms-get-products' }, '');
+  @Get('products')
+  async getUsers(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number,
+  ) {
+    return this.productService.send(
+      {
+        cmd: 'ms-get-products',
+      },
+      { limit, offset },
+    );
   }
 }
