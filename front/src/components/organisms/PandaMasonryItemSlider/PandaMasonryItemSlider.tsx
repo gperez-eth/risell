@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MasonryFlashList } from "@shopify/flash-list";
 import { PandaProductCard } from "@components/molecules";

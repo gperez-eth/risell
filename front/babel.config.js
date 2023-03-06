@@ -11,6 +11,7 @@ module.exports = {
           '@utils': './src/utils',
           '@components': './src/components',
           '@services': './src/services',
+          '@graphql': './src/graphql-risell'
         }
       }
     ]

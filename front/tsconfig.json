@@ -4,11 +4,13 @@
     "baseUrl": "./src",
     "target": "es6",
     "jsx": "react",
+    "moduleResolution": "node",
     "paths": {
       "@screens/*": ["screens/*"],
       "@utils/*": ["utils/*"],
       "@components/*": ["components/*"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@graphql/*": ["graphql-risell/*"]
     }
   }
 }
