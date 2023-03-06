@@ -2,10 +2,8 @@ import { StyleSheet } from "react-native";
 import { DefaultHomeScreen } from "@components/templates";
 import { PandaSafeView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
-import { risellClient } from "@graphql/index";
 
 export function HomeScreen({ navigation }) {
-  console.log(risellClient.getProducts())
   return (
     <PandaSafeView
       style={styles.container}

@@ -3,12 +3,18 @@ import { StyleSheet, View, Pressable } from "react-native";
 import { PandaSearchBar } from "@components/molecules";
 import { PandaCategorySlider } from "@components/organisms";
 import { PandaMasonryItemSlider } from "@components/organisms/PandaMasonryItemSlider/PandaMasonryItemSlider";
+import { risellClient } from "@graphql/index";
 
 type DefaultHomeScreenProps = {
   navigation: any;
 };
 
 export function DefaultHomeScreen({ ...props }: DefaultHomeScreenProps) {
+
+  risellClient.getProducts().then((data) => {
+    console.log(data.products)
+  })
+
   const data = [
     { title: "Near you", icon: "MAP_CARD" },
     { title: "Marketplace", icon: "MARKETPLACE_CARD" },
