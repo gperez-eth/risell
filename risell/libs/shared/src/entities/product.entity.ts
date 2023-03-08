@@ -10,6 +10,7 @@ import {
 import { Currency } from './currency.entity';
 import { ProductImages } from './product-images.entity';
 
+
 @ObjectType()
 @Entity('products')
 export class Product {
