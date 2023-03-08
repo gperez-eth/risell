@@ -138,7 +138,7 @@ export class initdb1678262145828 implements MigrationInterface {
       `ALTER TABLE "product_images" DROP CONSTRAINT "FK_b367708bf720c8dd62fc6833161"`,
     );
     await queryRunner.query(`DROP TABLE "products"`);
-    await queryRunner.query(`DROP TABLE "product_images"`);
+    await queryRunner.query(`DROP TABLE "product_imagess"`);
     await queryRunner.query(`DROP TABLE "currency"`);
   }
 }
