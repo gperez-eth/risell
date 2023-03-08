@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
   OneToMany,
+  JoinColumn
 } from 'typeorm';
 import { ProductImages } from './product-images.entity';
 
@@ -59,14 +60,7 @@ export class Product {
   @Column('smallint')
   likes: number;
 
-  @OneToMany(() => ProductImages, image => image.product)
+  @Field(() => [ProductImages])
+  @OneToMany(() => ProductImages, (productImages) => productImages.product)
   images: ProductImages[];
-
-  @Field(() => Number)
-  @Column({ type: 'numeric' })
-  latitude: number;
-
-  @Field(() => Number)
-  @Column({ type: 'numeric' })
-  longitude: number;
 }

@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class initdb1678229465420 implements MigrationInterface {
-    name = 'initdb1678229465420'
+export class initdb1678262145828 implements MigrationInterface {
+    name = 'initdb1678262145828'
     products = [
         {
             title: 'Pokemon Zafiro GBA Pal ESP', 
@@ -75,10 +75,11 @@ export class initdb1678229465420 implements MigrationInterface {
         }
     ]
 
+
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TABLE "product_images" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "uri" character varying NOT NULL, "productId" uuid, CONSTRAINT "PK_1974264ea7265989af8392f63a1" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "products" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "description" character varying NOT NULL, "categoryId" character(36) NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "editedAt" character varying NOT NULL, "isShippable" boolean NOT NULL, "isAuction" boolean NOT NULL, "price" bigint NOT NULL, "currencyId" character(36) NOT NULL, "views" smallint NOT NULL, "likes" smallint NOT NULL, CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "product_images" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "uri" character varying NOT NULL, "product" uuid, CONSTRAINT "PK_265744321363f94f5789402b70c" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`ALTER TABLE "product_images" ADD CONSTRAINT "FK_8dcf36b93879109c44a4ab49b77" FOREIGN KEY ("product") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "product_images" ADD CONSTRAINT "FK_b367708bf720c8dd62fc6833161" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         
         for (let i = 0; i < this.products.length; i++) { 
             await queryRunner
@@ -91,13 +92,14 @@ export class initdb1678229465420 implements MigrationInterface {
         const product_ids = await queryRunner.query(`SELECT id FROM products`);
         for (let i = 0; i < product_ids.length; i++) { 
             for (let j = 0; j < this.products[i].images.length; j++) {
-                await queryRunner.query('INSERT INTO product_images (product, uri) VALUES ($1, $2)', [product_ids[i].id, this.products[i].images[j]]);
+                await queryRunner.query('INSERT INTO product_images ("productId", uri) VALUES ($1, $2)', [product_ids[i].id, this.products[i].images[j]]);
             }
         }
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "product_images" DROP CONSTRAINT "FK_8dcf36b93879109c44a4ab49b77"`);
+        await queryRunner.query(`ALTER TABLE "product_images" DROP CONSTRAINT "FK_b367708bf720c8dd62fc6833161"`);
         await queryRunner.query(`DROP TABLE "products"`);
         await queryRunner.query(`DROP TABLE "product_images"`);
     }

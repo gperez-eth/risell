@@ -14,7 +14,6 @@ export class ProductsService {
   ) {}
 
   async getNearestProducts(data: NearestProductsQueryDto): Promise<Product[]> {
-    console.log(data.args.latitude)
     const query = `
     ST_DistanceSphere(
       ST_MakePoint(${data.args.longitude}, ${data.args.latitude}),
@@ -36,6 +35,7 @@ export class ProductsService {
     return await this.productRepository.findAll({
       skip: offset,
       take: limit,
+      relations: ['images']
     });
   }
 }

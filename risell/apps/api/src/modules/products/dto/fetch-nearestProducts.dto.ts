@@ -12,10 +12,4 @@ export class FetchNearestProductsArgs {
   @Field(() => Int)
   @Min(0)
   offset = 0;
-
-  @Field(() => Float)
-  latitude;
-
-  @Field(() => Float)
-  longitude;
 }

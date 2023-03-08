@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  JoinColumn
 } from 'typeorm';
 
 import { Product } from './product.entity';
@@ -15,7 +16,7 @@ export class ProductImages {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Product, product => product.images)
+  @ManyToOne(() => Product, (product) => product.images)
   product: Product;
 
   @Field(() => String)
