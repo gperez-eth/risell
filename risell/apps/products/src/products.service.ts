@@ -35,7 +35,7 @@ export class ProductsService {
     return await this.productRepository.findAll({
       skip: offset,
       take: limit,
-      relations: ['images']
+      relations: ['images', 'currency']
     });
   }
 }

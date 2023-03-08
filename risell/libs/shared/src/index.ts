@@ -12,6 +12,7 @@ export * from './modules/postgresdb.module';
 //export entities
 export * from './entities/product.entity';
 export * from './entities/product-images.entity'
+export * from './entities/currency.entity'
 
 //export repositories
 export * from './repositories/products.repository';

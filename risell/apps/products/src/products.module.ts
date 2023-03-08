@@ -9,6 +9,7 @@ import {
   Product,
   ProductsRepository,
   ProductImages,
+  Currency,
 } from '@app/shared';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
@@ -21,7 +22,7 @@ import { ProductsController } from './products.controller';
     }),
     SharedModule,
     PostgresDBModule,
-    TypeOrmModule.forFeature([Product, ProductImages]),
+    TypeOrmModule.forFeature([Product, ProductImages, Currency]),
   ],
   controllers: [ProductsController],
   providers: [

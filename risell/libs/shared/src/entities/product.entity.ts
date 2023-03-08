@@ -5,8 +5,9 @@ import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
   OneToMany,
-  JoinColumn
+  ManyToOne
 } from 'typeorm';
+import { Currency } from './currency.entity';
 import { ProductImages } from './product-images.entity';
 
 @ObjectType()
@@ -48,9 +49,9 @@ export class Product {
   @Column({ type: 'bigint' })
   price: bigint;
 
-  @Field(() => String)
-  @Column('char', { length: 36 })
-  currencyId: string;
+  @Field(() => Currency)
+  @ManyToOne(() => Currency, (currency) => currency.products)
+  currency: Currency;
 
   @Field(() => Number)
   @Column('smallint')

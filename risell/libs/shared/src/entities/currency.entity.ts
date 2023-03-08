@@ -2,23 +2,27 @@ import { ObjectType, Field } from '@nestjs/graphql';
 import {
   Column,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
 import { Product } from './product.entity';
 
 @ObjectType()
-@Entity('product_images')
-export class ProductImages {
+@Entity('currency')
+export class Currency {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Product, (product) => product.images)
-  product: Product;
+  @Field(() => String)
+  @Column('char', { length: 3 })
+  currency_code: string;
 
   @Field(() => String)
-  @Column()
-  uri: string;
+  @Column('char', { length: 1 })
+  currency_symbol: string;
+
+  @OneToMany(() => Product, (product) => product.currency)
+  products: Product[];
+
 }
