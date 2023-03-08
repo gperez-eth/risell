@@ -15,7 +15,7 @@ interface HasId {
 export abstract class BaseAbstractRepository<T extends HasId>
   implements BaseInterfaceRepository<T>
 {
-  private entity: Repository<T>;
+  public entity: Repository<T>;
   protected constructor(entity: Repository<T>) {
     this.entity = entity;
   }

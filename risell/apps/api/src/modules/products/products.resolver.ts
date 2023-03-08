@@ -1,16 +1,26 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { ProductEntity } from '@app/shared';
+import { Product } from '@app/shared';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { FetchProductsArgs } from './dto/fetch-products.dto';
+import { FetchProductsArgs, FetchNearestProductsArgs } from './dto';
 
-@Resolver(() => ProductEntity)
+@Resolver(() => Product)
 export class ProductsResolver {
   constructor(
     @Inject('PRODUCTS_SERVICE') private readonly productService: ClientProxy,
   ) {}
 
-  @Query((returns) => [ProductEntity], { name: 'products' })
+  @Query((returns) => [Product], { name: 'nearestProducts' })
+  findNearest(@Args() args: FetchNearestProductsArgs) {
+    return this.productService.send(
+      {
+        cmd: 'ms-get-nearestProducts',
+      },
+      { args },
+    );
+  }
+
+  @Query((returns) => [Product], { name: 'products' })
   findAllRecent(@Args() args: FetchProductsArgs) {
     return this.productService.send(
       {
@@ -20,3 +30,4 @@ export class ProductsResolver {
     );
   }
 }
+

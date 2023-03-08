@@ -1,4 +1,4 @@
-import { PaginationQueryDto, SharedService } from '@app/shared';
+import { NearestProductsQueryDto, PaginationQueryDto, SharedService } from '@app/shared';
 import { Controller, Inject } from '@nestjs/common';
 import {
   Ctx,
@@ -16,6 +16,15 @@ export class ProductsController {
     @Inject('SharedServiceInterface')
     private readonly sharedService: SharedService,
   ) {}
+
+  @MessagePattern({ cmd: 'ms-get-nearestProducts' })
+  async getNearestProducts(
+    @Ctx() context: RmqContext,
+    @Payload() data: NearestProductsQueryDto,
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+    return await this.productService.getNearestProducts(data);
+  }
 
   @MessagePattern({ cmd: 'ms-get-products' })
   async getProductsHomeList(

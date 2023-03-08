@@ -36,6 +36,7 @@ services:
       - .env
     depends_on:
       - rabbitmq
+      - postgres
       - products
     volumes:
       - .:/usr/src/app # any change to base folder should be reflected
@@ -43,7 +44,7 @@ services:
     command: npm run start:dev api
 
   postgres:
-    image: postgres:latest
+    image: postgis/postgis:15-3.3
     env_file:
       - .env
     ports:

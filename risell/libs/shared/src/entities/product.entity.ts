@@ -4,11 +4,13 @@ import {
   Entity,
   CreateDateColumn,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
+import { ProductImages } from './product-images.entity';
 
 @ObjectType()
 @Entity('products')
-export class ProductEntity {
+export class Product {
   @Field(() => String)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -56,4 +58,15 @@ export class ProductEntity {
   @Field(() => Number)
   @Column('smallint')
   likes: number;
+
+  @OneToMany(() => ProductImages, image => image.product)
+  images: ProductImages[];
+
+  @Field(() => Number)
+  @Column({ type: 'numeric' })
+  latitude: number;
+
+  @Field(() => Number)
+  @Column({ type: 'numeric' })
+  longitude: number;
 }

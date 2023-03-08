@@ -6,8 +6,9 @@ import {
   SharedModule,
   PostgresDBModule,
   SharedService,
-  ProductEntity,
+  Product,
   ProductsRepository,
+  ProductImages,
 } from '@app/shared';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
@@ -20,7 +21,7 @@ import { ProductsController } from './products.controller';
     }),
     SharedModule,
     PostgresDBModule,
-    TypeOrmModule.forFeature([ProductEntity]),
+    TypeOrmModule.forFeature([Product, ProductImages]),
   ],
   controllers: [ProductsController],
   providers: [
