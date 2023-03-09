@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class initdb1678262145828 implements MigrationInterface {
-  name = 'initdb1678262145828';
+export class initdb1678337253131 implements MigrationInterface {
+  name = 'initdb1678337253131';
   products = [
     {
       title: 'Pokemon Zafiro GBA Pal ESP',
@@ -19,6 +19,7 @@ export class initdb1678262145828 implements MigrationInterface {
         'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047096.jpg?pictureSize=W640',
         'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047088.jpg?pictureSize=W640',
       ],
+      bids: ['2023-03-09T17:24:51Z'],
     },
     {
       title: '3DS XL Pikachu Edition',
@@ -33,6 +34,7 @@ export class initdb1678262145828 implements MigrationInterface {
       images: [
         'https://img.ebay-kleinanzeigen.de/api/v1/prod-ads/images/00/00bbd7e3-df27-4d5a-a306-956557e3cd31?rule=$_59.JPG',
       ],
+      bids: ['2023-03-09T17:24:51Z'],
     },
     {
       title: 'Pokemon Cristal GBC precintado',
@@ -47,6 +49,7 @@ export class initdb1678262145828 implements MigrationInterface {
       images: [
         'https://cdn.wallapop.com/images/10420/de/ui/__/c10420p810998034/i2793715903.jpg?pictureSize=W640',
       ],
+      bids: ['2023-03-09T17:24:51Z'],
     },
     {
       title: 'Xenoblade Chronicles 3 Switch en perfecto estado',
@@ -61,6 +64,7 @@ export class initdb1678262145828 implements MigrationInterface {
       images: [
         'https://cdn.wallapop.com/images/10420/e5/ii/__/c10420p855788834/i3024902838.jpg?pictureSize=W640',
       ],
+      bids: ['2023-03-09T17:24:51Z'],
     },
     {
       title: 'Xbox Series X EDICION HALO',
@@ -75,10 +79,20 @@ export class initdb1678262145828 implements MigrationInterface {
       images: [
         'https://cdn.wallapop.com/images/10420/e8/nv/__/c10420p861076772/i3054684992.jpg?pictureSize=W640',
       ],
+      bids: ['2023-03-09T17:24:51Z'],
     },
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(
+      `CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "bid" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "userId" uuid NOT NULL, "bidTime" TIMESTAMP NOT NULL DEFAULT now(), "auctionId" uuid, CONSTRAINT "PK_0cdfb69539712b75b07c5fbf19a" PRIMARY KEY ("id", "userId", "bidTime"))`,
+    );
+    await queryRunner.query(
+      `CREATE TABLE "auction" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "expirationTime" TIMESTAMP NOT NULL, "isEnded" boolean NOT NULL, "productId" uuid, CONSTRAINT "PK_9dc876c629273e71646cf6dfa67" PRIMARY KEY ("id"))`,
+    );
     await queryRunner.query(
       `CREATE TABLE "currency" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "currency_code" character(3) NOT NULL, "currency_symbol" character(1) NOT NULL, CONSTRAINT "PK_3cda65c731a6264f0e444cc9b91" PRIMARY KEY ("id"))`,
     );
@@ -86,40 +100,69 @@ export class initdb1678262145828 implements MigrationInterface {
       `CREATE TABLE "product_images" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "uri" character varying NOT NULL, "productId" uuid, CONSTRAINT "PK_1974264ea7265989af8392f63a1" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "products" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "description" character varying NOT NULL, "categoryId" character(36) NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "editedAt" character varying NOT NULL, "isShippable" boolean NOT NULL, "isAuction" boolean NOT NULL, "price" bigint NOT NULL, "currencyId" uuid NOT NULL, "views" smallint NOT NULL, "likes" smallint NOT NULL, CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "products" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "description" character varying NOT NULL, "categoryId" character(36) NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "editedAt" TIMESTAMP NOT NULL DEFAULT now(), "isShippable" boolean NOT NULL, "isAuction" boolean NOT NULL, "price" bigint NOT NULL, "views" smallint NOT NULL, "likes" smallint NOT NULL, "userId" uuid, "currencyId" uuid, CONSTRAINT "PK_0806c755e0aca124e67c0cf6d7d" PRIMARY KEY ("id"))`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "bid" ADD CONSTRAINT "FK_b0f254bd6d29d3da2b6a8af262b" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "bid" ADD CONSTRAINT "FK_2e00b0f268f93abcf693bb682c6" FOREIGN KEY ("auctionId") REFERENCES "auction"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "auction" ADD CONSTRAINT "FK_2ef88930833af1b133a1e12a0b4" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "product_images" ADD CONSTRAINT "FK_b367708bf720c8dd62fc6833161" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
+      `ALTER TABLE "products" ADD CONSTRAINT "FK_99d90c2a483d79f3b627fb1d5e9" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+    );
+    await queryRunner.query(
       `ALTER TABLE "products" ADD CONSTRAINT "FK_11c482ccb03f44355d4e6e8c0d3" FOREIGN KEY ("currencyId") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
+
+    await queryRunner.query(`INSERT INTO "user" DEFAULT VALUES;`);
 
     await queryRunner.query(
       `INSERT INTO currency ("currency_code", "currency_symbol") VALUES ('EUR', '€')`,
     );
+
     const currency = await queryRunner.query(`SELECT id FROM currency`);
+    const user = await queryRunner.query(`SELECT id FROM "user"`);
 
     for (let i = 0; i < this.products.length; i++) {
       await queryRunner.query(
-        `INSERT INTO products (title, description, "categoryId", "editedAt", "isShippable", "isAuction", price, "currencyId", views, likes)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        `INSERT INTO products (title, description, "categoryId", "isShippable", "isAuction", price, "currencyId", views, likes, "userId")
+                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
         [
           this.products[i].title,
           this.products[i].description,
           this.products[i].categoryId,
-          this.products[i].editedAt,
           this.products[i].isShippable,
           this.products[i].isAuction,
           this.products[i].price,
           currency[0].id,
           this.products[i].views,
           this.products[i].likes,
+          user[0].id,
         ],
       );
     }
 
     const product_ids = await queryRunner.query(`SELECT id FROM products`);
+
+    await queryRunner.query(
+      `INSERT INTO auction ("expirationTime", "isEnded", "productId") VALUES ('2023-03-11T17:24:51Z', false, $1)`,
+      [product_ids[0].id],
+    );
+
+    const auction_ids = await queryRunner.query(`SELECT id FROM auction`);
+
+    await queryRunner.query(
+      `INSERT INTO bid ("bidTime", "userId", "auctionId") VALUES ('2023-03-11T17:24:51Z', $1, $2)`,
+      [user[0].id, auction_ids[0].id],
+    );
+
     for (let i = 0; i < product_ids.length; i++) {
       for (let j = 0; j < this.products[i].images.length; j++) {
         await queryRunner.query(
@@ -135,10 +178,25 @@ export class initdb1678262145828 implements MigrationInterface {
       `ALTER TABLE "products" DROP CONSTRAINT "FK_11c482ccb03f44355d4e6e8c0d3"`,
     );
     await queryRunner.query(
+      `ALTER TABLE "products" DROP CONSTRAINT "FK_99d90c2a483d79f3b627fb1d5e9"`,
+    );
+    await queryRunner.query(
       `ALTER TABLE "product_images" DROP CONSTRAINT "FK_b367708bf720c8dd62fc6833161"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "auction" DROP CONSTRAINT "FK_2ef88930833af1b133a1e12a0b4"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "bid" DROP CONSTRAINT "FK_2e00b0f268f93abcf693bb682c6"`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE "bid" DROP CONSTRAINT "FK_b0f254bd6d29d3da2b6a8af262b"`,
     );
     await queryRunner.query(`DROP TABLE "products"`);
     await queryRunner.query(`DROP TABLE "product_images"`);
     await queryRunner.query(`DROP TABLE "currency"`);
+    await queryRunner.query(`DROP TABLE "auction"`);
+    await queryRunner.query(`DROP TABLE "bid"`);
+    await queryRunner.query(`DROP TABLE "user"`);
   }
 }

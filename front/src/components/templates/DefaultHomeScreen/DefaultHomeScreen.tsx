@@ -12,7 +12,7 @@ type DefaultHomeScreenProps = {
 export function DefaultHomeScreen({ ...props }: DefaultHomeScreenProps) {
 
   risellClient.getProducts().then((data) => {
-    console.log(data.products)
+    console.log(data)
   })
 
   const data = [

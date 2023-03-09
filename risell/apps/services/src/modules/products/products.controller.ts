@@ -1,4 +1,8 @@
-import { NearestProductsQueryDto, PaginationQueryDto, SharedService } from '@app/shared';
+import {
+  NearestProductsQueryDto,
+  PaginationQueryDto,
+  SharedService,
+} from '@app/shared';
 import { Controller, Inject } from '@nestjs/common';
 import {
   Ctx,

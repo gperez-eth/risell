@@ -2,10 +2,10 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
 import { SharedService } from '@app/shared';
-import { ProductsModule } from './products.module';
+import { ServicesModule } from './services.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ProductsModule);
+  const app = await NestFactory.create(ServicesModule);
 
   const configService = app.get(ConfigService);
   const sharedService = app.get(SharedService);

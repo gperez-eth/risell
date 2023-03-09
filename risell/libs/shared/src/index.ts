@@ -11,15 +11,20 @@ export * from './modules/postgresdb.module';
 
 //export entities
 export * from './entities/product.entity';
-export * from './entities/product-images.entity'
-export * from './entities/currency.entity'
+export * from './entities/product-images.entity';
+export * from './entities/currency.entity';
+export * from './entities/bid.entity';
+export * from './entities/auction.entity';
+export * from './entities/user.entinty';
 
 //export repositories
 export * from './repositories/products.repository';
+export * from './repositories/users.repository';
 
 // export interfaces
 export * from './interfaces/products.repository.interface';
+export * from './interfaces/users.repository.interface';
 
 // export dto
 export * from './dto/pagination-query.dto';
-export * from './dto/nearestProducts-query.dto'
+export * from './dto/nearestProducts-query.dto';

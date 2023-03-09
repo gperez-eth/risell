@@ -18,9 +18,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/risell/test/jest-e2e.json",
-    "migration:generate": "func() { npx typeorm -d ./dist/apps/\"$1\"/apps/\"$1\"/src/db/data-source.js migration:generate ./apps/\"$1\"/src/db/migrations/\"$2\"; }; func",
-    "migration:run": "func() { npx typeorm -d ./dist/apps/\"$1\"/apps/\"$1\"/src/db/data-source.js migration:run; }; func",
-    "migration:revert": "func() { npx typeorm -d ./dist/apps/\"$1\"/apps/\"$1\"/src/db/data-source.js migration:revert; }; func"
+    "migration:generate": "func() { npx typeorm -d ./dist/apps/services/apps/services/src/db/data-source.js migration:generate ./apps/services/src/db/migrations/\"$1\"; }; func",
+    "migration:run": "func() { npx typeorm -d ./dist/apps/services/apps/services/src/db/data-source.js migration:run; }; func",
+    "migration:revert": "func() { npx typeorm -d ./dist/apps/services/apps/services/src/db/data-source.js migration:revert; }; func"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.2.0",

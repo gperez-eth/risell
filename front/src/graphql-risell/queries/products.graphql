@@ -4,5 +4,8 @@ query getProducts($limit: Int, $offset: Int) {
     title
     description
     price
+    images {
+      uri
+    }
   }
 }

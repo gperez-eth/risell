@@ -19,13 +19,14 @@ export class ProductsService {
       ST_MakePoint(${data.args.longitude}, ${data.args.latitude}),
       ST_MakePoint(products.longitude, products.latitude)
     ) as distance
-    `
-    return await this.productRepository.entity.createQueryBuilder('products')
-    .addSelect(query)
-    .orderBy('distance')
-    .limit(data.args.limit)
-    .offset(data.args.offset)
-    .getMany();
+    `;
+    return await this.productRepository.entity
+      .createQueryBuilder('products')
+      .addSelect(query)
+      .orderBy('distance')
+      .limit(data.args.limit)
+      .offset(data.args.offset)
+      .getMany();
   }
 
   async getProductsHomeList({
@@ -35,7 +36,7 @@ export class ProductsService {
     return await this.productRepository.findAll({
       skip: offset,
       take: limit,
-      relations: ['images', 'currency']
+      relations: ['images', 'currency', 'auction.bids.user'],
     });
   }
 }
