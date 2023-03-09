@@ -2,86 +2,6 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class initdb1678337253131 implements MigrationInterface {
   name = 'initdb1678337253131';
-  products = [
-    {
-      title: 'Pokemon Zafiro GBA Pal ESP',
-      description: 'Descripción del producto 1',
-      categoryId: 0,
-      editedAt: '2023-03-07 10:30:00',
-      isShippable: true,
-      isAuction: false,
-      price: 20939,
-      views: 50,
-      likes: 10,
-      images: [
-        'https://cdn.wallapop.com/images/10420/e9/ab/__/c10420p862124545/i3060005077.jpg?pictureSize=W640',
-        'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047082.jpg?pictureSize=W640',
-        'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047096.jpg?pictureSize=W640',
-        'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047088.jpg?pictureSize=W640',
-      ],
-      bids: ['2023-03-09T17:24:51Z'],
-    },
-    {
-      title: '3DS XL Pikachu Edition',
-      description: 'Descripción del producto 2',
-      categoryId: 0,
-      editedAt: '2023-03-07 13:30:00',
-      isShippable: true,
-      isAuction: false,
-      price: 20939,
-      views: 50,
-      likes: 10,
-      images: [
-        'https://img.ebay-kleinanzeigen.de/api/v1/prod-ads/images/00/00bbd7e3-df27-4d5a-a306-956557e3cd31?rule=$_59.JPG',
-      ],
-      bids: ['2023-03-09T17:24:51Z'],
-    },
-    {
-      title: 'Pokemon Cristal GBC precintado',
-      description: 'Descripción del producto 3',
-      categoryId: 0,
-      editedAt: '2023-03-07 11:30:00',
-      isShippable: false,
-      isAuction: true,
-      price: 12334,
-      views: 231,
-      likes: 88,
-      images: [
-        'https://cdn.wallapop.com/images/10420/de/ui/__/c10420p810998034/i2793715903.jpg?pictureSize=W640',
-      ],
-      bids: ['2023-03-09T17:24:51Z'],
-    },
-    {
-      title: 'Xenoblade Chronicles 3 Switch en perfecto estado',
-      description: 'Descripción del producto 4',
-      categoryId: 0,
-      editedAt: '2023-03-07 16:30:00',
-      isShippable: false,
-      isAuction: true,
-      price: 9343,
-      views: 872,
-      likes: 123,
-      images: [
-        'https://cdn.wallapop.com/images/10420/e5/ii/__/c10420p855788834/i3024902838.jpg?pictureSize=W640',
-      ],
-      bids: ['2023-03-09T17:24:51Z'],
-    },
-    {
-      title: 'Xbox Series X EDICION HALO',
-      description: 'Descripción del producto 5',
-      categoryId: 0,
-      editedAt: '2023-03-07 09:30:00',
-      isShippable: false,
-      isAuction: false,
-      price: 12334,
-      views: 200,
-      likes: 55,
-      images: [
-        'https://cdn.wallapop.com/images/10420/e8/nv/__/c10420p861076772/i3054684992.jpg?pictureSize=W640',
-      ],
-      bids: ['2023-03-09T17:24:51Z'],
-    },
-  ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -121,56 +41,41 @@ export class initdb1678337253131 implements MigrationInterface {
       `ALTER TABLE "products" ADD CONSTRAINT "FK_11c482ccb03f44355d4e6e8c0d3" FOREIGN KEY ("currencyId") REFERENCES "currency"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
 
-    await queryRunner.query(`INSERT INTO "user" DEFAULT VALUES;`);
-
     await queryRunner.query(
-      `INSERT INTO currency ("currency_code", "currency_symbol") VALUES ('EUR', '€')`,
+      `INSERT INTO public.currency VALUES ('2763de19-9719-415d-af6e-8157cac9da59', 'EUR', '€');`,
     );
 
-    const currency = await queryRunner.query(`SELECT id FROM currency`);
-    const user = await queryRunner.query(`SELECT id FROM "user"`);
-
-    for (let i = 0; i < this.products.length; i++) {
-      await queryRunner.query(
-        `INSERT INTO products (title, description, "categoryId", "isShippable", "isAuction", price, "currencyId", views, likes, "userId")
-                  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
-        [
-          this.products[i].title,
-          this.products[i].description,
-          this.products[i].categoryId,
-          this.products[i].isShippable,
-          this.products[i].isAuction,
-          this.products[i].price,
-          currency[0].id,
-          this.products[i].views,
-          this.products[i].likes,
-          user[0].id,
-        ],
-      );
-    }
-
-    const product_ids = await queryRunner.query(`SELECT id FROM products`);
-
     await queryRunner.query(
-      `INSERT INTO auction ("expirationTime", "isEnded", "productId") VALUES ('2023-03-11T17:24:51Z', false, $1)`,
-      [product_ids[0].id],
+      `INSERT INTO public."user" VALUES ('f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404');`,
     );
 
-    const auction_ids = await queryRunner.query(`SELECT id FROM auction`);
-
     await queryRunner.query(
-      `INSERT INTO bid ("bidTime", "userId", "auctionId") VALUES ('2023-03-11T17:24:51Z', $1, $2)`,
-      [user[0].id, auction_ids[0].id],
+      `INSERT INTO public.products VALUES ('68485e59-6f6d-458a-ad89-598b71917533', 'Pokemon Zafiro GBA Pal ESP', 'Descripción del producto 1', '0                                   ', '2023-03-09 08:10:29.283261', '2023-03-09 08:10:29.283261', true, false, 20939, 50, 10, 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2763de19-9719-415d-af6e-8157cac9da59');
+      INSERT INTO public.products VALUES ('ce1bedc2-1a7a-4b37-8f2a-4bcd44822be2', '3DS XL Pikachu Edition', 'Descripción del producto 2', '0                                   ', '2023-03-09 08:10:29.283261', '2023-03-09 08:10:29.283261', true, false, 20939, 50, 10, 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2763de19-9719-415d-af6e-8157cac9da59');
+      INSERT INTO public.products VALUES ('26e90ed4-027c-42dd-9639-a0f324a1a6dc', 'Pokemon Cristal GBC precintado', 'Descripción del producto 3', '0                                   ', '2023-03-09 08:10:29.283261', '2023-03-09 08:10:29.283261', false, true, 12334, 231, 88, 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2763de19-9719-415d-af6e-8157cac9da59');
+      INSERT INTO public.products VALUES ('a0317385-9d67-4304-a0ea-74583c0d97c1', 'Xenoblade Chronicles 3 Switch en perfecto estado', 'Descripción del producto 4', '0                                   ', '2023-03-09 08:10:29.283261', '2023-03-09 08:10:29.283261', false, true, 9343, 872, 123, 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2763de19-9719-415d-af6e-8157cac9da59');
+      INSERT INTO public.products VALUES ('d59a6d42-f0e6-4a2e-a3c0-ac24855fada5', 'Xbox Series X EDICION HALO', 'Descripción del producto 5', '0                                   ', '2023-03-09 08:10:29.283261', '2023-03-09 08:10:29.283261', false, false, 12334, 200, 55, 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2763de19-9719-415d-af6e-8157cac9da59');`,
     );
 
-    for (let i = 0; i < product_ids.length; i++) {
-      for (let j = 0; j < this.products[i].images.length; j++) {
-        await queryRunner.query(
-          'INSERT INTO product_images ("productId", uri) VALUES ($1, $2)',
-          [product_ids[i].id, this.products[i].images[j]],
-        );
-      }
-    }
+    await queryRunner.query(
+      `INSERT INTO public.auction VALUES ('a54aa955-12dd-4a8a-9690-afb1675f425b', '2023-03-11 17:24:51', false, '68485e59-6f6d-458a-ad89-598b71917533');`,
+    );
+
+    await queryRunner.query(
+      `INSERT INTO public.bid VALUES ('ff451310-ba7b-4512-a5cb-d230fa283dfc', 'f23b6bc8-24ed-4a08-8ecd-dc6b0fc5a404', '2023-03-11 17:24:51', 'a54aa955-12dd-4a8a-9690-afb1675f425b');`,
+    );
+
+    await queryRunner.query(
+      `INSERT INTO public.product_images VALUES ('1cef144e-3aa3-495d-9ab3-4d1d90ae5710', 'https://cdn.wallapop.com/images/10420/e9/ab/__/c10420p862124545/i3060005077.jpg?pictureSize=W640', '68485e59-6f6d-458a-ad89-598b71917533');
+      INSERT INTO public.product_images VALUES ('9be9dba4-93f8-4461-9650-06a3f9da45aa', 'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047082.jpg?pictureSize=W640', '68485e59-6f6d-458a-ad89-598b71917533');
+      INSERT INTO public.product_images VALUES ('955efbb1-90e3-481d-b834-127eed0a41a2', 'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047096.jpg?pictureSize=W640', '68485e59-6f6d-458a-ad89-598b71917533');
+      INSERT INTO public.product_images VALUES ('6d463bbc-555a-431e-b5f4-0039161d3b38', 'https://cdn.wallapop.com/images/10420/e3/an/__/c10420p852061874/i3002047088.jpg?pictureSize=W640', '68485e59-6f6d-458a-ad89-598b71917533');
+      INSERT INTO public.product_images VALUES ('387542ec-4c45-4a78-9b45-d8cf5d462a72', 'https://img.ebay-kleinanzeigen.de/api/v1/prod-ads/images/00/00bbd7e3-df27-4d5a-a306-956557e3cd31?rule=$_59.JPG', 'ce1bedc2-1a7a-4b37-8f2a-4bcd44822be2');
+      INSERT INTO public.product_images VALUES ('83f8c447-b738-44e7-9ee4-51b95538e413', 'https://cdn.wallapop.com/images/10420/de/ui/__/c10420p810998034/i2793715903.jpg?pictureSize=W640', '26e90ed4-027c-42dd-9639-a0f324a1a6dc');
+      INSERT INTO public.product_images VALUES ('2d8c5a3c-0f57-4c40-b977-99afff78145a', 'https://cdn.wallapop.com/images/10420/e5/ii/__/c10420p855788834/i3024902838.jpg?pictureSize=W640', 'a0317385-9d67-4304-a0ea-74583c0d97c1');
+      INSERT INTO public.product_images VALUES ('bcd07ed9-6fc1-4dfd-8dd3-f3dff1fa8c46', 'https://cdn.wallapop.com/images/10420/e8/nv/__/c10420p861076772/i3054684992.jpg?pictureSize=W640', 'd59a6d42-f0e6-4a2e-a3c0-ac24855fada5');
+      `,
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
