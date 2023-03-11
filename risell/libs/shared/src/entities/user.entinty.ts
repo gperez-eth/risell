@@ -1,5 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Bid } from './bid.entity';
 import { Product } from './product.entity';
 
@@ -17,4 +17,8 @@ export class User {
   @Field(() => [Bid])
   @OneToMany(() => Bid, (bid) => bid.user)
   bids?: Bid[];
+
+  @Field(() => String)
+  @Column()
+  location: string;
 }

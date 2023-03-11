@@ -28,7 +28,7 @@ export class Bid {
   @PrimaryColumn()
   @Field(() => String)
   @Column({ type: 'timestamptz', default: 'NOW()' })
-  bidTime: Date;
+  bidTime: string;
 
   @Field(() => Auction)
   @ManyToOne(() => Auction, (auction) => auction.bids)

@@ -43,7 +43,7 @@ export class Product {
   @Column({ type: 'timestamptz', default: 'NOW()' })
   editedAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Boolean)
   @Column()
   isShippable: boolean;
 

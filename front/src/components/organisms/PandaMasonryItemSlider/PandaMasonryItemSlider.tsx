@@ -2,15 +2,24 @@ import * as React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { MasonryFlashList } from "@shopify/flash-list";
 import { PandaProductCard } from "@components/molecules";
-import { PandaMasonryItemSliderProps } from "@utils/Types/PandaMasonryItemSlider";
+import { GetProductsQuery } from "@graphql/__generated__/risell";
+import { ProductCardProps } from "@utils/Types";
+import { Dimensions } from "react-native";
+
+type PandaMasonryItemSliderProps = {
+  headerComponent: React.ComponentType;
+  data: GetProductsQuery;
+  cardOnPress: (id: string) => void;
+  title?: String;
+}
 
 export function PandaMasonryItemSlider({
   ...props
 }: PandaMasonryItemSliderProps) {
-  function ProductCardRender(item, columnIndex) {
+  function ProductCardRender(product: ProductCardProps, columnIndex: number) {
     return (
       <Pressable
-        onPress={() => props.itemOnPress(item)}
+        onPress={() => props.cardOnPress(product.id)}
         style={({ pressed }) => [
           {
             opacity: pressed ? 0.5 : 1,
@@ -20,18 +29,17 @@ export function PandaMasonryItemSlider({
             : styles.rightColumnPadding,
         ]}
       >
-        <PandaProductCard productData={item} />
+        <PandaProductCard cardData={product} />
       </Pressable>
     );
   }
 
   return (
     <View style={styles.container}>
-      {props.title && <Text style={styles.title}>{props.title}</Text>}
       <MasonryFlashList
         ListHeaderComponent={props.headerComponent}
         ListHeaderComponentStyle={styles.listHeader}
-        data={props.productData}
+        data={props.data.products}
         renderItem={({ item, columnIndex }) =>
           ProductCardRender(item, columnIndex)
         }
@@ -39,6 +47,7 @@ export function PandaMasonryItemSlider({
         numColumns={2}
         contentContainerStyle={styles.list}
         centerContent
+        showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => (
           <View
             style={{
@@ -54,6 +63,7 @@ export function PandaMasonryItemSlider({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    height: Dimensions.get("screen").height
   },
   listHeader: {
     marginBottom: 20,

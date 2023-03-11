@@ -7,6 +7,9 @@ module.exports = {
       ...config,
       [`./__generated__/${key}.ts`]: {
         documents: [value.document],
+        config: {
+          skipTypename: true
+        },
         plugins: [
           'typescript',
           'typescript-operations',

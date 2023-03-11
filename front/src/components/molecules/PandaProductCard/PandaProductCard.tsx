@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Image } from "expo-image";
 import { PandaIcon } from "@components/atoms";
@@ -6,8 +6,14 @@ import { ICONS } from "@utils/constants/Icons";
 import { ProductCardProps } from "@utils/Types";
 import { PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
+import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
 
-export function PandaProductCard({ ...props }: ProductCardProps) {
+type PandaProductCardProps = {
+  cardData: ProductCardProps;
+}
+
+export function PandaProductCard({ ...props }: PandaProductCardProps) {
+
   return (
     <PandaView
       darkColor={Colors.dark.productCard}
@@ -15,17 +21,17 @@ export function PandaProductCard({ ...props }: ProductCardProps) {
       shadow
       style={[
         styles.container,
-        props.productData.isAuction && styles.auctionCard,
+        props.cardData.isAuction && styles.auctionCard,
       ]}
     >
       <View>
         <Image
           style={[
             styles.productImage,
-            props.productData.isAuction && styles.auctionCardImage,
+            props.cardData.isAuction && styles.auctionCardImage,
           ]}
           source={{
-            uri: props.productData.uri,
+            uri: props.cardData.images[props.cardData.images.length - 1].uri,
             headers: { Authorization: "someAuthToken" },
           }}
           contentFit={"cover"}
@@ -33,15 +39,15 @@ export function PandaProductCard({ ...props }: ProductCardProps) {
         <View style={styles.typeOfSellingContainer}>
           <PandaIcon
             color="#FFFFFF"
-            icon={props.productData.isShippable ? ICONS.TRUCK : ICONS.BOX}
+            icon={props.cardData.isShippable ? ICONS.TRUCK : ICONS.BOX}
             size={15}
           />
         </View>
 
-        {props.productData.isAuction && (
+        {props.cardData.isAuction && (
           <View style={styles.auctionTimeContainer}>
-            <PandaIcon color="#FACA21" icon={ICONS.BOLT} size={15} />
-            <Text style={styles.auctionTimeText}>12h : 26m : 13s</Text>
+            <PandaIcon color="#FACA21" icon={ICONS.CLOCK} size={15} />
+            <PandaCountdown auctionEndTime={props.cardData.auction[0].expirationTime} style={styles.auctionTimeText}/>
           </View>
         )}
       </View>
@@ -52,19 +58,18 @@ export function PandaProductCard({ ...props }: ProductCardProps) {
           style={styles.productTitle}
           numberOfLines={1}
         >
-          {props.productData.title}
+          {props.cardData.title}
         </PandaText>
-        {props.productData.isAuction && (
+        {props.cardData.isAuction && (
           <Text style={styles.maxBidTitle}>Highest Bid</Text>
         )}
         <View style={styles.priceInfoContainer}>
-          <PandaIcon color="#00FFC2" icon={ICONS.ETHEREUM} />
           <PandaText
             darkColor={Colors.dark.productCardCurrency}
             lightColor={Colors.light.productCardCurrency}
             style={styles.maxBid}
           >
-            0,1944 ETH
+            {props.cardData.price / 100} {props.cardData.currency.currency_code + props.cardData.currency.currency_symbol}
           </PandaText>
         </View>
       </View>
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
   maxBidTitle: {
     marginTop: 10,
     fontFamily: "Montserrat-SemiBold",
-    fontSize: 10,
+    fontSize: 12,
     color: "#888888",
   },
   priceInfoContainer: {

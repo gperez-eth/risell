@@ -5,5 +5,5 @@ exports.config = {
         method: 'POST',
         url: 'http://localhost:4000/graphql',
       },
-    }
+    },
   };

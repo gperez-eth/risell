@@ -22,8 +22,8 @@ export class Auction {
   product: Product;
 
   @Field(() => String)
-  @Column({ type: 'timestamptz' })
-  expirationTime: Date;
+  @Column({ type: 'timestamptz', default: 'NOW()' })
+  expirationTime: string;
 
   @Field(() => Boolean)
   @Column()

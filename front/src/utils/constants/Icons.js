@@ -11,7 +11,7 @@ import { faGavel } from "@fortawesome/free-solid-svg-icons/faGavel";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons/faBitcoin";
 import { faEthereum } from "@fortawesome/free-brands-svg-icons/faEthereum";
 import { faHourglass } from "@fortawesome/free-solid-svg-icons/faHourglass";
-import { faBolt } from "@fortawesome/free-solid-svg-icons/faBolt";
+import { faClock } from "@fortawesome/free-regular-svg-icons/faClock";
 import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck";
 import { faPeopleCarry } from "@fortawesome/free-solid-svg-icons/faPeopleCarry";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
@@ -32,7 +32,7 @@ export const ICONS = {
   BITCOIN: faBitcoin,
   ETHEREUM: faEthereum,
   HOURGLASS: faHourglass,
-  BOLT: faBolt,
+  CLOCK: faClock,
   TRUCK: faTruck,
   BOX: faPeopleCarry,
   LEFT_ARROW: faAngleLeft,
