@@ -2,6 +2,7 @@ import {
   NearestProductsQueryDto,
   PaginationQueryDto,
   Product,
+  ProductInfoQueryDto,
   ProductRepositoryInterface,
 } from '@app/shared';
 import { Injectable, Inject } from '@nestjs/common';
@@ -13,10 +14,14 @@ export class ProductsService {
     private readonly productRepository: ProductRepositoryInterface,
   ) {}
 
-  async getNearestProducts(data: NearestProductsQueryDto): Promise<Product[]> {
+  async getNearestProducts({
+    limit,
+    offset,
+    location,
+  }: NearestProductsQueryDto): Promise<Product[]> {
     const query = `
     ST_DistanceSphere(
-      ST_MakePoint(${data.args.longitude}, ${data.args.latitude}),
+      ST_MakePoint(${location}),
       ST_MakePoint(products.longitude, products.latitude)
     ) as distance
     `;
@@ -24,8 +29,8 @@ export class ProductsService {
       .createQueryBuilder('products')
       .addSelect(query)
       .orderBy('distance')
-      .limit(data.args.limit)
-      .offset(data.args.offset)
+      .limit(limit)
+      .offset(offset)
       .getMany();
   }
 
@@ -37,6 +42,13 @@ export class ProductsService {
       skip: offset,
       take: limit,
       relations: ['images', 'currency', 'auction'],
+    });
+  }
+
+  async getProductInfo({ productId }: ProductInfoQueryDto): Promise<Product[]> {
+    return await this.productRepository.findAll({
+      where: { id: productId },
+      relations: ['images', 'user', 'currency', 'auction.bids.user'],
     });
   }
 }

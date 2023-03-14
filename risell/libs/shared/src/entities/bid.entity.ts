@@ -1,9 +1,7 @@
-import { ObjectType, Field, GraphQLISODateTime } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import {
   Column,
-  CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
@@ -29,6 +27,10 @@ export class Bid {
   @Field(() => String)
   @Column({ type: 'timestamptz', default: 'NOW()' })
   bidTime: string;
+
+  @Field(() => Number)
+  @Column({ type: 'integer' })
+  amount: number;
 
   @Field(() => Auction)
   @ManyToOne(() => Auction, (auction) => auction.bids)

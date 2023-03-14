@@ -1,8 +1,10 @@
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart";
+import { faDollar } from "@fortawesome/free-solid-svg-icons/faDollar";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { faFilter } from "@fortawesome/free-solid-svg-icons/faFilter";
+import { faLayerGroup } from "@fortawesome/free-solid-svg-icons/faLayerGroup";
 import { faComment } from "@fortawesome/free-solid-svg-icons/faComment";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faMapLocationDot } from "@fortawesome/free-solid-svg-icons/faMapLocationDot";
@@ -20,8 +22,8 @@ import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 
 export const ICONS = {
   HOME_SCREEN: faHouse,
-  FAVORITES_SCREEN: faHeart,
-  NOTIFICATIONS_SCREEN: faComment,
+  SELL_SCREEN: faDollar,
+  HUB_SCREEN: faLayerGroup,
   PROFILE_SCREEN: faUser,
   SEARCH_BAR: faMagnifyingGlass,
   SEARCH_FILTER: faFilter,

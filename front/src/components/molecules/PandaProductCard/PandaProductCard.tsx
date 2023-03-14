@@ -31,7 +31,7 @@ export function PandaProductCard({ ...props }: PandaProductCardProps) {
             props.cardData.isAuction && styles.auctionCardImage,
           ]}
           source={{
-            uri: props.cardData.images[props.cardData.images.length - 1].uri,
+            uri: props.cardData.images[0].uri,
             headers: { Authorization: "someAuthToken" },
           }}
           contentFit={"cover"}
@@ -47,7 +47,7 @@ export function PandaProductCard({ ...props }: PandaProductCardProps) {
         {props.cardData.isAuction && (
           <View style={styles.auctionTimeContainer}>
             <PandaIcon color="#FACA21" icon={ICONS.CLOCK} size={15} />
-            <PandaCountdown auctionEndTime={props.cardData.auction[0].expirationTime} style={styles.auctionTimeText}/>
+            <PandaCountdown auctionEndTime={props.cardData.auction.expirationTime} style={styles.auctionTimeText}/>
           </View>
         )}
       </View>

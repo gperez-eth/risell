@@ -1,9 +1,8 @@
-import { Field, Int, ArgsType, Float } from '@nestjs/graphql';
-import { Max, Min } from 'class-validator';
+import { Field, Int, ArgsType } from '@nestjs/graphql';
+import { IsNotEmpty, Max, Min } from 'class-validator';
 
 @ArgsType()
 export class FetchNearestProductsArgs {
-    
   @Field(() => Int)
   @Min(1)
   @Max(40)
@@ -12,4 +11,8 @@ export class FetchNearestProductsArgs {
   @Field(() => Int)
   @Min(0)
   offset = 0;
+
+  @Field(() => String)
+  @IsNotEmpty()
+  location;
 }

@@ -16,6 +16,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         url: configService.get<string>('POSTGRES_URI'),
         autoLoadEntities: true,
         synchronize: false, // shouldn't be used in production - may lose data
+        logging: true,
       }),
 
       inject: [ConfigService],

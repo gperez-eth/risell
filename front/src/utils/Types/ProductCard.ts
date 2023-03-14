@@ -4,7 +4,7 @@ export type ProductCardProps = {
   price: number;
   isShippable: boolean;
   isAuction: boolean;
-  auction: Array<{ expirationTime: string }>;
+  auction?: { expirationTime: string };
   currency: { currency_code: string; currency_symbol: string };
   images: Array<{ uri: string }>;
 };

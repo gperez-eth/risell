@@ -11,7 +11,7 @@ type PandaIconProps = {
   size?: number;
   width?: number;
   height?: number;
-  style?: FontAwesomeIconStyle;
+  style?: FontAwesomeIconStyle | FontAwesomeIconStyle[];
 };
 
 export function PandaIcon({ ...props }: PandaIconProps) {

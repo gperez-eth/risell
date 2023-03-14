@@ -3,6 +3,7 @@ import { Product } from '@app/shared';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { FetchProductsArgs, FetchNearestProductsArgs } from './dto';
+import { FetchProductArgs } from './dto/fetch-product.dto';
 
 @Resolver(() => Product)
 export class ProductsResolver {
@@ -16,7 +17,7 @@ export class ProductsResolver {
       {
         cmd: 'ms-get-nearestProducts',
       },
-      { args },
+      { ...args },
     );
   }
 
@@ -29,5 +30,14 @@ export class ProductsResolver {
       { args },
     );
   }
-}
 
+  @Query((returns) => [Product], { name: 'product' })
+  getProductInfo(@Args() args: FetchProductArgs) {
+    return this.productService.send(
+      {
+        cmd: 'ms-get-product',
+      },
+      { ...args },
+    );
+  }
+}

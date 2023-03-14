@@ -54,21 +54,33 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
+      id="tabs"
       initialRouteName={NAV_SCREENS.HOME}
       screenOptions={{ headerShown: false, tabBarHideOnKeyboard: true }}
       tabBar={(props) => <PandaTabBar {...props} />}
     >
-      <BottomTab.Screen name={NAV_SCREENS.HOME} component={HomeScreen} />
-      <BottomTab.Screen name={NAV_SCREENS.FAVORITES} component={SearchScreen} />
       <BottomTab.Screen
-        name={NAV_SCREENS.ADD_PRODUCT}
+        name={NAV_SCREENS.HOME}
+        options={{ tabBarLabel: "Home" }}
+        component={HomeScreen}
+      />
+      <BottomTab.Screen
+        name={NAV_SCREENS.SELL}
+        options={{
+          tabBarLabel: "Sell",
+        }}
         component={SearchScreen}
       />
       <BottomTab.Screen
-        name={NAV_SCREENS.NOTIFICATIONS}
+        name={NAV_SCREENS.HUB}
+        options={{ tabBarLabel: "Hub" }}
         component={SearchScreen}
       />
-      <BottomTab.Screen name={NAV_SCREENS.PROFILE} component={SearchScreen} />
+      <BottomTab.Screen
+        name={NAV_SCREENS.PROFILE}
+        options={{ tabBarLabel: "Profile" }}
+        component={SearchScreen}
+      />
     </BottomTab.Navigator>
   );
 }

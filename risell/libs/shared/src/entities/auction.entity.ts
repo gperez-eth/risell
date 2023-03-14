@@ -5,6 +5,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Bid } from './bid.entity';
@@ -17,17 +18,9 @@ export class Auction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => Product)
-  @ManyToOne(() => Product, (product) => product.auction)
-  product: Product;
-
   @Field(() => String)
   @Column({ type: 'timestamptz', default: 'NOW()' })
   expirationTime: string;
-
-  @Field(() => Boolean)
-  @Column()
-  isEnded: boolean;
 
   @Field(() => [Bid])
   @OneToMany(() => Bid, (bid) => bid.auction)

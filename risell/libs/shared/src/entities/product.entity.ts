@@ -1,4 +1,4 @@
-import { ObjectType, Field, GraphQLISODateTime } from '@nestjs/graphql';
+import { ObjectType, Field, GraphQLISODateTime, Int } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Auction } from './auction.entity';
 import { Currency } from './currency.entity';
@@ -32,10 +34,6 @@ export class Product {
   description: string;
 
   @Field(() => String)
-  @Column('char', { length: 36 })
-  categoryId: string;
-
-  @Field(() => String)
   @Column({ type: 'timestamptz', default: 'NOW()' })
   createdAt: Date;
 
@@ -52,16 +50,17 @@ export class Product {
   isAuction: boolean;
 
   @Field(() => Number)
-  @Column({ type: 'bigint' })
-  price?: bigint;
+  @Column({ type: 'integer' })
+  price?: number;
 
   @Field(() => Currency)
   @ManyToOne(() => Currency, (currency) => currency.products)
   currency: Currency;
 
-  @Field(() => [Auction])
-  @OneToMany(() => Auction, (auction) => auction.product)
-  auction?: Auction[];
+  @Field(() => Auction, { nullable: true })
+  @OneToOne(() => Auction)
+  @JoinColumn({})
+  auction?: Auction;
 
   @Field(() => Number)
   @Column('smallint')

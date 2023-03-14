@@ -28,3 +28,4 @@ export * from './interfaces/users.repository.interface';
 // export dto
 export * from './dto/pagination-query.dto';
 export * from './dto/nearestProducts-query.dto';
+export * from './dto/productInfo-query.dto';

@@ -1,6 +1,7 @@
 import {
   NearestProductsQueryDto,
   PaginationQueryDto,
+  ProductInfoQueryDto,
   SharedService,
 } from '@app/shared';
 import { Controller, Inject } from '@nestjs/common';
@@ -37,5 +38,14 @@ export class ProductsController {
   ) {
     this.sharedService.acknowledgeMessage(context);
     return await this.productService.getProductsHomeList(pagination);
+  }
+
+  @MessagePattern({ cmd: 'ms-get-product' })
+  async getProductInfo(
+    @Ctx() context: RmqContext,
+    @Payload() data: ProductInfoQueryDto,
+  ) {
+    this.sharedService.acknowledgeMessage(context);
+    return await this.productService.getProductInfo(data);
   }
 }

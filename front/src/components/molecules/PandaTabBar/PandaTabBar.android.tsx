@@ -1,3 +1,4 @@
+import React from "react";
 import { PandaIcon } from "@components/atoms";
 import { View, Pressable, StyleSheet, Platform } from "react-native";
 import { ICONS } from "@utils/constants/Icons";

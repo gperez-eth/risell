@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { DefaultHomeScreen } from "@components/templates";
 import { PandaSafeView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
+import { PandaSearchBar } from "@components/molecules";
 
 export function HomeScreen({ navigation }) {
   return (

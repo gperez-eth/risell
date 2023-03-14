@@ -3,6 +3,7 @@ const tintColorDark = "#fff";
 
 export default {
   defaultButton: "#0066FF",
+  routeFocused: "#007CFF",
   light: {
     text: "#000000",
     screenBackground: "#fff",

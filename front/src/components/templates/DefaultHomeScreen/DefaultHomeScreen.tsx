@@ -10,8 +10,7 @@ type DefaultHomeScreenProps = {
 };
 
 export function DefaultHomeScreen({ ...props }: DefaultHomeScreenProps) {
-
-  const {data: products, isLoading} = useFetchHomeProducts()
+  const { data: products, isLoading } = useFetchHomeProducts();
 
   const categoryObjects = [
     { title: "Near you", icon: "MAP_CARD" },
@@ -37,13 +36,12 @@ export function DefaultHomeScreen({ ...props }: DefaultHomeScreenProps) {
     );
   }
 
-  if(isLoading) { return (
-    <></>
-  )}
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <View style={styles.container}>
-      
       <PandaMasonryItemSlider
         headerComponent={headerComponent}
         data={products}
