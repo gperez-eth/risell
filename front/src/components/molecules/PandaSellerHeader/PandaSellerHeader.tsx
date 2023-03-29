@@ -2,9 +2,15 @@ import { PandaAvatar } from "@components/atoms";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
 import { PandaText } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
-import { PandaSellerHeaderProps } from "@utils/Types";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+
+type PandaSellerHeaderProps = {
+  sellerData: {
+    avatar: string;
+    username: string;
+  };
+};
 
 export function PandaSellerHeader({ ...props }: PandaSellerHeaderProps) {
   return (

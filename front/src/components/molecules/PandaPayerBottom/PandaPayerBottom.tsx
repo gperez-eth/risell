@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import { PandaPayerBottomProps } from "@utils/Types";
 import { PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
-import dayjs from "dayjs";
-import { generateCountdown } from "@utils/functions/generateCountdown";
+import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
+
+type PandaPayerBottomProps = {
+  payInfo: {
+    isShippable: boolean;
+    isAuction: boolean;
+    currentPrice: number;
+    expirationTime: string;
+  };
+};
 
 export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
-  const [auctionTime, setAuctionTime] = useState(
-    generateCountdown(props.payInfo.isAuction),
-  );
-  setInterval(() => {
-    setAuctionTime(generateCountdown(props.payInfo.isAuction));
-  }, 250);
-
   function renderTypeBottom() {
     if (props.payInfo.currentPrice && props.payInfo.isAuction) {
       return (
@@ -28,7 +28,10 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
             </View>
             <View style={styles.auctionInfoGroup}>
               <PandaText style={styles.bidText}>Auction Time</PandaText>
-              <PandaText style={styles.auctionTime}>{auctionTime}</PandaText>
+              <PandaCountdown
+                auctionEndTime={props.payInfo.expirationTime}
+                style={styles.auctionTime}
+              />
             </View>
           </View>
           <View
@@ -64,12 +67,15 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
             <View style={styles.bidPriceGroup}>
               <PandaText style={styles.bidText}>Highest Bid</PandaText>
               <PandaText style={styles.currentBidPrice}>
-                {props.payInfo.currentPrice} €
+                {props.payInfo.currentPrice / 100} €
               </PandaText>
             </View>
             <View style={styles.auctionInfoGroup}>
               <PandaText style={styles.bidText}>Auction Time</PandaText>
-              <PandaText style={styles.auctionTime}>{auctionTime}</PandaText>
+              <PandaCountdown
+                auctionEndTime={props.payInfo.expirationTime}
+                style={styles.auctionTime}
+              />
             </View>
           </View>
           <PandaButton
@@ -139,5 +145,6 @@ const styles = StyleSheet.create({
   auctionTime: {
     fontSize: 14,
     fontFamily: "Montserrat-SemiBold",
+    color: "#FFFFFF",
   },
 });

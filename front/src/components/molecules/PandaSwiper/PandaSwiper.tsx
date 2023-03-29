@@ -3,10 +3,14 @@ import { StyleSheet, View, Pressable, Dimensions } from "react-native";
 import { PandaIcon } from "@components/atoms";
 import { ICONS } from "@utils/constants/Icons";
 import { Image } from "expo-image";
-import { PandaSwiperProps } from "@utils/Types/PandaSwiper";
 import { FlashList } from "@shopify/flash-list";
 
 const windowWidth = Dimensions.get("window").width;
+
+type PandaSwiperProps = {
+  images: { uri: string }[];
+  backAction?: any;
+};
 
 export function PandaSwiper({ ...props }: PandaSwiperProps) {
   const listRenderItem = ({ item }) => {
@@ -14,7 +18,7 @@ export function PandaSwiper({ ...props }: PandaSwiperProps) {
       <Image
         style={styles.productImage}
         source={{
-          uri: item,
+          uri: item.uri,
         }}
         contentFit={"cover"}
       />

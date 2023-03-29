@@ -48,6 +48,13 @@ export class ProductsService {
   async getProductInfo({ productId }: ProductInfoQueryDto): Promise<Product[]> {
     return await this.productRepository.findAll({
       where: { id: productId },
+      order: {
+        auction: {
+          bids: {
+            bidTime: 'DESC',
+          },
+        },
+      },
       relations: ['images', 'user', 'currency', 'auction.bids.user'],
     });
   }

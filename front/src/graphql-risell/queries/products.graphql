@@ -17,3 +17,41 @@ query getProducts($limit: Int, $offset: Int) {
     }
   }
 }
+
+query getProductData($productId: String!) {
+  product(productId: $productId) {
+    title
+    description
+    price
+    isShippable
+    editedAt
+    isAuction
+    views
+    likes
+    user {
+      id
+      location
+      username
+      avatar
+    }
+    auction {
+      expirationTime
+      bids {
+        amount
+        bidTime
+        user {
+          id
+          username
+          avatar
+        }
+      }
+    }
+    currency {
+      currency_code
+      currency_symbol
+    }
+    images {
+      uri
+    }
+  }
+}
