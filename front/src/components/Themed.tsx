@@ -1,4 +1,12 @@
-import { Text as DefaultText, View as DefaultView } from "react-native";
+import {
+  Text as DefaultText,
+  View as DefaultView,
+  Pressable as DefaultPressable,
+  PressableProps,
+  View,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import { SafeAreaView as DefaultAreaView } from "react-native-safe-area-context";
 
 import Colors from "@utils/constants/Colors";
@@ -23,11 +31,13 @@ type ThemeProps = {
   lightColor?: string;
   darkColor?: string;
   shadow?: boolean;
+  customStyle?: StyleProp<ViewStyle>;
 };
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type SafeAreaProps = ThemeProps & DefaultView["props"];
+export type PandaPressableProps = ThemeProps & PressableProps;
 
 export function PandaText(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -63,5 +73,20 @@ export function PandaSafeView(props: SafeAreaProps) {
 
   return (
     <DefaultAreaView style={[{ backgroundColor }, style]} {...otherProps} />
+  );
+}
+
+export function PandaPressable(props: PandaPressableProps) {
+  const { customStyle, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  return (
+    <DefaultPressable
+      style={[{ backgroundColor }, customStyle]}
+      {...otherProps}
+    />
   );
 }

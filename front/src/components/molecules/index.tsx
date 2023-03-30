@@ -3,3 +3,4 @@ export * from "./PandaTabBar/PandaTabBar";
 export * from "./PandaCategoryCard/PandaCategoryCard";
 export * from "./PandaProductCard/PandaProductCard";
 export * from "./PandaSwiper/PandaSwiper";
+export * from "./PandaBidBar/PandaBidBar";

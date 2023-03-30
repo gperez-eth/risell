@@ -10,6 +10,7 @@ type PandaPayerBottomProps = {
     isShippable: boolean;
     isAuction: boolean;
     currentPrice: number;
+    highestBid: number;
     expirationTime: string;
   };
 };
@@ -23,7 +24,7 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
             <View style={styles.bidPriceGroup}>
               <PandaText style={styles.bidText}>Highest Bid</PandaText>
               <PandaText style={styles.currentBidPrice}>
-                {props.payInfo.currentPrice} €
+                {props.payInfo.highestBid / 100} €
               </PandaText>
             </View>
             <View style={styles.auctionInfoGroup}>

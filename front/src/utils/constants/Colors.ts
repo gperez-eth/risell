@@ -21,6 +21,10 @@ export default {
     actionButtonBackground: "#1B1A1A",
   },
   dark: {
+    100: "#FFFFFF",
+    400: "#9B9B9B",
+    700: "#0C0B0D",
+    900: "#000000",
     text: "#fff",
     screenBackground: "#131418",
     shadowColor: "#171717",

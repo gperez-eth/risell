@@ -8,5 +8,7 @@ async function fetchProduct(ctx: QueryFunctionContext) {
 }
 
 export function useFetchProduct(productId: String) {
-  return useQuery(["product", productId], fetchProduct);
+  return useQuery(["product", productId], fetchProduct, {
+    refetchInterval: 10000,
+  });
 }
