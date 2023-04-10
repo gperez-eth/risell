@@ -4,3 +4,5 @@ export * from "./PandaCategoryCard/PandaCategoryCard";
 export * from "./PandaProductCard/PandaProductCard";
 export * from "./PandaSwiper/PandaSwiper";
 export * from "./PandaBidBar/PandaBidBar";
+export * from "./PandaPillList/PandaPillList";
+export * from "./PandaProductHeader/PandaProductHeader";

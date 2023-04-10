@@ -4,8 +4,10 @@ import { PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
 import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
 type PandaPayerBottomProps = {
+  onBid: (index: number) => void;
   payInfo: {
     isShippable: boolean;
     isAuction: boolean;
@@ -42,16 +44,20 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
           >
             <PandaButton
               style={{ flexGrow: 1, marginRight: 10 }}
-              shadow
-              color="#0078FE"
-              pressAction={() => console.log("asdf")}
+              color={Colors.dark[100]}
+              pressAction={() => props.onBid(0)}
             >
-              <PandaText style={styles.buttonText}>Place Bid</PandaText>
+              <PandaText
+                darkColor={Colors.dark[900]}
+                lightColor={Colors.dark[100]}
+                style={styles.buttonText}
+              >
+                Place Bid
+              </PandaText>
             </PandaButton>
             <PandaButton
               style={{ flexGrow: 1 }}
-              shadow
-              color="#00C767"
+              color={Colors.primary}
               pressAction={() => console.log("asdf")}
             >
               <PandaText style={styles.buttonText}>Buy Now</PandaText>
@@ -93,7 +99,7 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
 
   return (
     <PandaView
-      darkColor={Colors.dark.pandaPayerBottom}
+      darkColor={Colors.dark[900]}
       lightColor={Colors.light.pandaPayerBottom}
       shadow
       style={[styles.container]}
@@ -110,6 +116,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 30,
     paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: Colors.dark[700],
   },
   auctionContainer: {},
   infoGroup: {

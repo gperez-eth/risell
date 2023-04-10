@@ -1,18 +1,18 @@
 import { StyleSheet } from "react-native";
 import { DefaultHomeScreen } from "@components/templates";
-import { PandaSafeView } from "@components/Themed";
+import { PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaSearchBar } from "@components/molecules";
 
 export function HomeScreen({ navigation }) {
   return (
-    <PandaSafeView
+    <PandaView
       style={styles.container}
       lightColor={Colors.light.screenBackground}
-      darkColor={Colors.dark.screenBackground}
+      darkColor={Colors.dark[900]}
     >
       <DefaultHomeScreen navigation={navigation} />
-    </PandaSafeView>
+    </PandaView>
   );
 }
 

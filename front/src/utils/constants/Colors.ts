@@ -2,6 +2,7 @@ const tintColorLight = "#2f95dc";
 const tintColorDark = "#fff";
 
 export default {
+  primary: "#48BF46",
   defaultButton: "#0066FF",
   routeFocused: "#007CFF",
   light: {
@@ -23,16 +24,20 @@ export default {
   dark: {
     100: "#FFFFFF",
     400: "#9B9B9B",
-    700: "#0C0B0D",
+    600: "#C1C1C1",
+    700: "#333333",
+    800: "#16181C",
     900: "#000000",
     text: "#fff",
+    textSecondary: "#C1C1C1",
+    textTerciary: "#9FA8B1",
     screenBackground: "#131418",
     shadowColor: "#171717",
     background: "#0C0B0D",
     searchBar: "#0C0B0D",
     tint: tintColorDark,
     categoryCard: "#0C0B0D",
-    productCard: "#0C0B0D",
+    productCard: "#16181C",
     productCardCurrency: "#00FFC2",
     productDescription: "#9B9B9B",
     pandaPayerBottom: "#0C0B0D",

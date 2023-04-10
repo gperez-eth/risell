@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { PandaBidBar, PandaSwiper } from "@components/molecules";
 import { PandaText } from "@components/Themed";
@@ -12,6 +12,10 @@ import { useFetchProduct } from "hooks/useProduct";
 import { ProductDataProps } from "@utils/Types/ProductData";
 import { FlashList } from "@shopify/flash-list";
 import { ScrollView } from "react-native-gesture-handler";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { PandaBottomSheet } from "@components/organisms";
+import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
+import { BidScreen } from "../BidScreen/BidScreen";
 
 type DefaultProductScreenProps = {
   navigation: any;
@@ -36,6 +40,7 @@ export function DefaultProductScreen({ ...props }: DefaultProductScreenProps) {
 
   const [optionsMenu, setOptionsMenu] = useState(optionsMenuDefault);
   const [optionsMenuSelected, setOptionsMenuSelected] = useState(0);
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
   useEffect(() => {
     optionsMenu[0].isActive = true;
@@ -95,9 +100,19 @@ export function DefaultProductScreen({ ...props }: DefaultProductScreenProps) {
 
   const bidHistorySection = () => {
     return (
-      <View style={{ height: 400, marginTop: 10 }}>
+      <View
+        style={[
+          styles.bidListContainer,
+          {
+            height:
+              productData.auction?.bids.length > 7
+                ? 400
+                : 70 * productData.auction?.bids.length,
+          },
+        ]}
+      >
         <FlashList
-          estimatedItemSize={75}
+          estimatedItemSize={70}
           data={productData.auction?.bids}
           renderItem={({ item }) => (
             <PandaBidBar
@@ -119,35 +134,44 @@ export function DefaultProductScreen({ ...props }: DefaultProductScreenProps) {
 
   return (
     <View style={styles.container}>
-      <PandaSwiper
-        images={productData.images}
-        backAction={props.navigation.goBack}
-      />
-      <ScrollView style={styles.infoContainer}>
-        <PandaText
-          lightColor={Colors.light.text}
-          darkColor={Colors.dark.text}
-          style={styles.productTitle}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustContentInsets={false}
+      >
+        <PandaSwiper
+          images={productData.images}
+          backAction={props.navigation.goBack}
+        />
+        <Animated.View
+          entering={FadeInDown.duration(1000)}
+          style={styles.infoContainer}
         >
-          {productData.title}
-        </PandaText>
-        <PandaSellerHeader sellerData={productData.user} />
-        <PandaText
-          lightColor={Colors.light.text}
-          darkColor={Colors.dark.text}
-          style={styles.description}
-        >
-          {productData.description}
-        </PandaText>
-        {productData.isAuction && (
-          <PandaToggle
-            options={optionsMenu}
-            onChangeMenuOption={(index) => changeBarOption(index)}
-          />
-        )}
-        {menuComponents[optionsMenuSelected]()}
+          <PandaText
+            lightColor={Colors.light.text}
+            darkColor={Colors.dark.text}
+            style={styles.productTitle}
+          >
+            {productData.title}
+          </PandaText>
+          <PandaSellerHeader sellerData={productData.user} />
+          <PandaText
+            lightColor={Colors.light.text}
+            darkColor={Colors.dark.text}
+            style={styles.description}
+          >
+            {productData.description}
+          </PandaText>
+          {productData.isAuction && (
+            <PandaToggle
+              options={optionsMenu}
+              onChangeMenuOption={(index) => changeBarOption(index)}
+            />
+          )}
+          {menuComponents[optionsMenuSelected]()}
+        </Animated.View>
       </ScrollView>
       <PandaPayerBottom
+        onBid={() => bottomSheetRef.current?.expand()}
         payInfo={{
           isAuction: productData.isAuction,
           isShippable: productData.isShippable,
@@ -156,6 +180,18 @@ export function DefaultProductScreen({ ...props }: DefaultProductScreenProps) {
           expirationTime: productData.auction?.expirationTime,
         }}
       />
+      <PandaBottomSheet ref={bottomSheetRef} snapPoints={["50%"]}>
+        <BidScreen
+          image={productData.images[0].uri}
+          name={productData.title}
+          avatar={productData.user.avatar}
+          username={productData.user.username}
+          auctionTime={productData.auction?.expirationTime}
+          highestBid={productData.auction?.bids[0]?.amount}
+          currencyCode={productData.currency.currency_code}
+          currencySymbol={productData.currency.currency_symbol}
+        />
+      </PandaBottomSheet>
     </View>
   );
 }
@@ -181,8 +217,8 @@ const styles = StyleSheet.create({
   stadisticsContainer: {
     flexDirection: "row",
     alignContent: "center",
-    alignItems: "center",
     marginTop: 20,
+    paddingBottom: 20,
   },
   lastTimeEdited: {
     fontSize: 12,
@@ -192,5 +228,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: "Montserrat-SemiBold",
     marginLeft: 5,
+  },
+  bidListContainer: {
+    marginTop: 10,
   },
 });

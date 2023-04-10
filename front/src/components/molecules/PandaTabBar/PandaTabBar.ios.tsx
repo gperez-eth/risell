@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     color: "#AFAFAF",
   },
   routeFocused: {
-    color: Colors.routeFocused,
+    color: Colors.primary,
   },
 });

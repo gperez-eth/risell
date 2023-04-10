@@ -2,8 +2,11 @@ import { Resolver, Query, Args } from '@nestjs/graphql';
 import { Product } from '@app/shared';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { FetchProductsArgs, FetchNearestProductsArgs } from './dto';
-import { FetchProductArgs } from './dto/fetch-product.dto';
+import {
+  FetchProductsArgs,
+  FetchNearestProductsArgs,
+  FetchProductArgs,
+} from './dto';
 
 @Resolver(() => Product)
 export class ProductsResolver {

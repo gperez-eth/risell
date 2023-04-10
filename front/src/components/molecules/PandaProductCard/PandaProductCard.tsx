@@ -65,7 +65,7 @@ export function PandaProductCard({ ...props }: PandaProductCardProps) {
         )}
         <View style={styles.priceInfoContainer}>
           <PandaText
-            darkColor={Colors.dark.productCardCurrency}
+            darkColor={Colors.dark.text}
             lightColor={Colors.light.productCardCurrency}
             style={styles.maxBid}
           >
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontFamily: "Montserrat-SemiBold",
     fontSize: 12,
-    color: "#888888",
+    color: Colors.dark.textTerciary,
   },
   priceInfoContainer: {
     flexDirection: "row",

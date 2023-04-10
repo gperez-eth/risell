@@ -10,9 +10,11 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const sharedService = app.get(SharedService);
 
-  const queue = configService.get<string>('RABBITMQ_PRODUCT_QUEUE');
+  const productQueue = configService.get<string>('RABBITMQ_PRODUCT_QUEUE');
+  const paymentsQueue = configService.get<string>('RABBITMQ_PAYMENT_QUEUE');
 
-  app.connectMicroservice(sharedService.getRmqOptions(queue));
+  app.connectMicroservice(sharedService.getRmqOptions(productQueue));
+  app.connectMicroservice(sharedService.getRmqOptions(paymentsQueue));
   app.startAllMicroservices();
 }
 bootstrap();

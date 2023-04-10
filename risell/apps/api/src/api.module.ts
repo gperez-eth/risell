@@ -2,6 +2,9 @@ import { CorrelationIdMiddleware, LoggerApi } from '@app/shared';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductsModule } from './modules/products/products.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -9,8 +12,16 @@ import { ProductsModule } from './modules/products/products.module';
       isGlobal: true,
       envFilePath: './.env',
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      debug: true,
+      playground: true,
+      autoSchemaFile: __dirname + '/graphql/schema.graphql',
+      sortSchema: true,
+    }),
     LoggerApi,
     ProductsModule,
+    PaymentsModule,
   ],
   controllers: [],
   providers: [],

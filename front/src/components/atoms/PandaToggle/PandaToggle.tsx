@@ -1,4 +1,4 @@
-import { PandaPressable, PandaText } from "@components/Themed";
+import { PandaPressable, PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import React from "react";
 import { StyleSheet, StyleProp, ViewStyle, View } from "react-native";
@@ -11,12 +11,12 @@ type PandaToggleProps = {
 
 export function PandaToggle({ ...props }: PandaToggleProps) {
   return (
-    <View style={styles.container}>
+    <PandaView darkColor={Colors.dark[800]} style={styles.container}>
       {props.options.map((option, index) => {
         return (
           <PandaPressable
             key={option.optionText}
-            darkColor={option.isActive ? Colors.dark[900] : Colors.dark[700]}
+            darkColor={option.isActive ? Colors.dark[900] : Colors.dark[800]}
             customStyle={[styles.button]}
             onPress={() => props.onChangeMenuOption(index)}
           >
@@ -29,18 +29,19 @@ export function PandaToggle({ ...props }: PandaToggleProps) {
           </PandaPressable>
         );
       })}
-    </View>
+    </PandaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderRadius: 10,
-    backgroundColor: Colors.dark[700],
+    borderRadius: 30,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
   },
   button: {
-    borderRadius: 10,
+    borderRadius: 30,
     paddingVertical: 13,
     alignItems: "center",
     flex: 1,

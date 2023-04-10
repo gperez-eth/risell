@@ -20,12 +20,17 @@ export * from './entities/user.entinty';
 //export repositories
 export * from './repositories/products.repository';
 export * from './repositories/users.repository';
+export * from './repositories/bids.repository';
+export * from './repositories/auctions.repository';
 
 // export interfaces
 export * from './interfaces/products.repository.interface';
 export * from './interfaces/users.repository.interface';
+export * from './interfaces/bid.repository.interface';
+export * from './interfaces/auction.repository.interface';
 
 // export dto
 export * from './dto/pagination-query.dto';
 export * from './dto/nearestProducts-query.dto';
 export * from './dto/productInfo-query.dto';
+export * from './dto/newBid-query.dto';

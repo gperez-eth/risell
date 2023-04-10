@@ -25,7 +25,7 @@ export class Bid {
 
   @PrimaryColumn()
   @Field(() => String)
-  @Column({ type: 'timestamptz', default: 'NOW()' })
+  @Column({ type: 'timestamptz' })
   bidTime: string;
 
   @Field(() => Number)
