@@ -4,14 +4,13 @@ import { PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
 import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 
 type PandaPayerBottomProps = {
   onBid: (index: number) => void;
   payInfo: {
     isShippable: boolean;
     isAuction: boolean;
-    currentPrice: number;
+    price: number;
     highestBid: number;
     expirationTime: string;
   };
@@ -19,7 +18,7 @@ type PandaPayerBottomProps = {
 
 export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
   function renderTypeBottom() {
-    if (props.payInfo.currentPrice && props.payInfo.isAuction) {
+    if (props.payInfo.isAuction) {
       return (
         <View style={styles.auctionContainer}>
           <View style={styles.infoGroup}>
@@ -37,63 +36,46 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
               />
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <PandaButton
-              style={{ flexGrow: 1, marginRight: 10 }}
-              color={Colors.dark[100]}
-              pressAction={() => props.onBid(0)}
+          {props.payInfo.price ? (
+            <View
+              style={{
+                flexDirection: "row",
+              }}
             >
-              <PandaText
-                darkColor={Colors.dark[900]}
-                lightColor={Colors.dark[100]}
-                style={styles.buttonText}
+              <PandaButton
+                style={{ flexGrow: 1, marginRight: 10 }}
+                color={Colors.dark[100]}
+                pressAction={() => props.onBid(0)}
               >
-                Place Bid
-              </PandaText>
-            </PandaButton>
+                <PandaText
+                  darkColor={Colors.dark[900]}
+                  lightColor={Colors.dark[100]}
+                  style={styles.buttonText}
+                >
+                  Place Bid
+                </PandaText>
+              </PandaButton>
+              <PandaButton
+                style={{ flexGrow: 1 }}
+                color={Colors.primary}
+                pressAction={() => console.log("asdf")}
+              >
+                <PandaText style={styles.buttonText}>Buy Now</PandaText>
+              </PandaButton>
+            </View>
+          ) : (
             <PandaButton
-              style={{ flexGrow: 1 }}
-              color={Colors.primary}
+              shadow
+              color="#0078FE"
               pressAction={() => console.log("asdf")}
             >
-              <PandaText style={styles.buttonText}>Buy Now</PandaText>
+              <PandaText style={styles.buttonText}>Place Bid</PandaText>
             </PandaButton>
-          </View>
+          )}
         </View>
       );
-    }
-
-    if (props.payInfo.isAuction) {
-      return (
-        <View style={styles.auctionContainer}>
-          <View style={styles.infoGroup}>
-            <View style={styles.bidPriceGroup}>
-              <PandaText style={styles.bidText}>Highest Bid</PandaText>
-              <PandaText style={styles.currentBidPrice}>
-                {props.payInfo.currentPrice / 100} €
-              </PandaText>
-            </View>
-            <View style={styles.auctionInfoGroup}>
-              <PandaText style={styles.bidText}>Auction Time</PandaText>
-              <PandaCountdown
-                auctionEndTime={props.payInfo.expirationTime}
-                style={styles.auctionTime}
-              />
-            </View>
-          </View>
-          <PandaButton
-            shadow
-            color="#0078FE"
-            pressAction={() => console.log("asdf")}
-          >
-            <PandaText style={styles.buttonText}>Place Bid</PandaText>
-          </PandaButton>
-        </View>
-      );
+    } else {
+      return <></>;
     }
   }
 

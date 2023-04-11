@@ -5,6 +5,8 @@ export default {
   primary: "#48BF46",
   defaultButton: "#0066FF",
   routeFocused: "#007CFF",
+  error: "#FF0000",
+  success: "#2FE42C",
   light: {
     text: "#000000",
     screenBackground: "#fff",

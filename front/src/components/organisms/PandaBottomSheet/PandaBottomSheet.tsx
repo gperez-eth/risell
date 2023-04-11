@@ -8,8 +8,6 @@ import Colors from "@utils/constants/Colors";
 
 export const PandaBottomSheet = React.forwardRef<BottomSheet, BottomSheetProps>(
   (props, ref) => {
-    const [isOpen, setIsOpen] = useState(true);
-
     const renderBackdrop = useCallback(
       (props) => (
         <BottomSheetBackdrop
@@ -26,7 +24,6 @@ export const PandaBottomSheet = React.forwardRef<BottomSheet, BottomSheetProps>(
         ref={ref}
         snapPoints={props.snapPoints}
         enablePanDownToClose={true}
-        onClose={() => setIsOpen(false)}
         index={-1}
         style={styles.container}
         backgroundStyle={{ backgroundColor: Colors.dark[900] }}

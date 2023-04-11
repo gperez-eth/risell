@@ -1,5 +1,5 @@
 import { risellClient } from "@graphql/index";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 async function fetchHomeProducts() {
   const { products } = await risellClient.getProducts();

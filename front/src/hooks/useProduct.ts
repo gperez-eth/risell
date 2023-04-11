@@ -1,5 +1,5 @@
 import { risellClient } from "@graphql/index";
-import { QueryFunctionContext, useQuery } from "react-query";
+import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 async function fetchProduct(ctx: QueryFunctionContext) {
   const [_, productId] = ctx.queryKey;

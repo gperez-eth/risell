@@ -3,13 +3,16 @@ import { PandaAvatar, PandaIcon } from "@components/atoms";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
 import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
 import { PandaProductHeader } from "@components/molecules";
-import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
+import { BottomSheetTextInput, useBottomSheet } from "@gorhom/bottom-sheet";
 import Colors from "@utils/constants/Colors";
 import { ICONS } from "@utils/constants/Icons";
 import { calculateMinimumBidPrice } from "@utils/functions/calculateMinBidAmount";
+import { addNewBid } from "hooks/useBids";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import CurrencyInput from "react-native-currency-input";
+import { useMutation } from "@tanstack/react-query";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 type BidScreenProps = {
   image: string;
@@ -20,11 +23,24 @@ type BidScreenProps = {
   highestBid: number;
   currencyCode: string;
   currencySymbol: string;
+  auctionId: String;
+  userId: String;
 };
 
 export function BidScreen({ ...props }: BidScreenProps) {
   const [value, setValue] = useState(0);
   const [isValidBid, setIsValidBid] = useState(false);
+  const { close } = useBottomSheet();
+
+  const newBidMutation = useMutation({
+    mutationFn: addNewBid,
+  });
+
+  useEffect(() => {
+    value >= calculateMinimumBidPrice(props.highestBid / 100)
+      ? setIsValidBid(true)
+      : setIsValidBid(false);
+  }, [props.highestBid]);
 
   const onChangeBidValue = (value) => {
     setValue(value);
@@ -33,11 +49,44 @@ export function BidScreen({ ...props }: BidScreenProps) {
       : setIsValidBid(false);
   };
 
-  useEffect(() => {
-    value >= calculateMinimumBidPrice(props.highestBid / 100)
-      ? setIsValidBid(true)
-      : setIsValidBid(false);
-  }, [props.highestBid]);
+  async function onSendBid() {
+    if (new Date(props.auctionTime) < new Date()) {
+      Toast.show({
+        type: "error",
+        text1: "We couldn't add your bid",
+        text2: "The auction has ended",
+        position: "bottom",
+        bottomOffset: 100,
+      });
+      close();
+      return;
+    }
+    const bidWithNoDecimal = parseInt((value * 100).toFixed(2));
+
+    if (bidWithNoDecimal > props.highestBid) {
+      newBidMutation.mutate({
+        auctionId: props.auctionId,
+        userId: props.userId,
+        bidAmount: bidWithNoDecimal,
+      });
+      close();
+      newBidMutation.isError
+        ? Toast.show({
+            type: "error",
+            text1: "We couldn't add your bid",
+            text2: newBidMutation.error.toString(),
+            position: "bottom",
+            bottomOffset: 100,
+          })
+        : Toast.show({
+            type: "success",
+            text1: "You are leading the auction!",
+            text2: `You bidded with a total of ${bidWithNoDecimal / 100}`,
+            position: "bottom",
+            bottomOffset: 100,
+          });
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -91,7 +140,7 @@ export function BidScreen({ ...props }: BidScreenProps) {
       <PandaButton
         disabled={!isValidBid}
         style={styles.bidButton}
-        pressAction={() => console.log("asdf")}
+        pressAction={onSendBid}
       >
         <PandaText
           darkColor={isValidBid ? Colors.dark[900] : Colors.dark[700]}

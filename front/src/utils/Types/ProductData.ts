@@ -9,6 +9,7 @@ export type ProductDataProps = {
   likes: number;
   user: { id: string; location: string; username: string; avatar: string };
   auction?: {
+    id: string;
     expirationTime: string;
     bids: Array<{
       amount: number;

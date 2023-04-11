@@ -175,23 +175,27 @@ export function DefaultProductScreen({ ...props }: DefaultProductScreenProps) {
         payInfo={{
           isAuction: productData.isAuction,
           isShippable: productData.isShippable,
-          currentPrice: productData.price,
+          price: productData.price,
           highestBid: productData.auction?.bids[0]?.amount,
           expirationTime: productData.auction?.expirationTime,
         }}
       />
-      <PandaBottomSheet ref={bottomSheetRef} snapPoints={["50%"]}>
-        <BidScreen
-          image={productData.images[0].uri}
-          name={productData.title}
-          avatar={productData.user.avatar}
-          username={productData.user.username}
-          auctionTime={productData.auction?.expirationTime}
-          highestBid={productData.auction?.bids[0]?.amount}
-          currencyCode={productData.currency.currency_code}
-          currencySymbol={productData.currency.currency_symbol}
-        />
-      </PandaBottomSheet>
+      {productData.isAuction && (
+        <PandaBottomSheet ref={bottomSheetRef} snapPoints={["50%"]}>
+          <BidScreen
+            image={productData.images[0].uri}
+            name={productData.title}
+            avatar={productData.user.avatar}
+            username={productData.user.username}
+            auctionTime={productData.auction?.expirationTime}
+            highestBid={productData.auction?.bids[0]?.amount}
+            currencyCode={productData.currency.currency_code}
+            currencySymbol={productData.currency.currency_symbol}
+            auctionId={productData.auction.id}
+            userId={productData.user.id}
+          />
+        </PandaBottomSheet>
+      )}
     </View>
   );
 }

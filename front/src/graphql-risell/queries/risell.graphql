@@ -35,6 +35,7 @@ query getProductData($productId: String!) {
       avatar
     }
     auction {
+      id
       expirationTime
       bids {
         amount
@@ -53,5 +54,11 @@ query getProductData($productId: String!) {
     images {
       uri
     }
+  }
+}
+
+query addNewBid($auctionId: String!, $userId: String!, $bidAmount: Int!) {
+  addNewBid(auctionId: $auctionId, userId: $userId, bidAmount: $bidAmount) {
+    id
   }
 }

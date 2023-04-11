@@ -1,9 +1,9 @@
+import React from "react";
 import {
   Text as DefaultText,
   View as DefaultView,
   Pressable as DefaultPressable,
   PressableProps,
-  View,
   StyleProp,
   ViewStyle,
 } from "react-native";
@@ -12,6 +12,11 @@ import { SafeAreaView as DefaultAreaView } from "react-native-safe-area-context"
 import Colors from "@utils/constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { generateBoxShadowStyle } from "@utils/index";
+import {
+  BaseToast as DefaultBaseToast,
+  ErrorToast as DefaultErrorToast,
+  BaseToastProps,
+} from "react-native-toast-message";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -38,6 +43,7 @@ export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type SafeAreaProps = ThemeProps & DefaultView["props"];
 export type PandaPressableProps = ThemeProps & PressableProps;
+export type ToastProps = ThemeProps & BaseToastProps;
 
 export function PandaText(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -88,5 +94,29 @@ export function PandaPressable(props: PandaPressableProps) {
       style={[{ backgroundColor }, customStyle]}
       {...otherProps}
     />
+  );
+}
+
+export function PandaBaseToast(props: ToastProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  return (
+    <DefaultBaseToast style={[{ backgroundColor }, style]} {...otherProps} />
+  );
+}
+
+export function PandaErrorToast(props: ToastProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  return (
+    <DefaultErrorToast style={[{ backgroundColor }, style]} {...otherProps} />
   );
 }

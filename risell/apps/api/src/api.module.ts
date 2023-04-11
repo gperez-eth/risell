@@ -14,10 +14,16 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      debug: true,
+      debug: false,
       playground: true,
       autoSchemaFile: __dirname + '/graphql/schema.graphql',
       sortSchema: true,
+      formatError: (error) => {
+        return {
+          message: error.message,
+          code: 'ERROR_CODE',
+        };
+      },
     }),
     LoggerApi,
     ProductsModule,
