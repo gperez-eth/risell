@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./src/hooks/useCachedResources";
 import useColorScheme from "./src/hooks/useColorScheme";
-import Navigation from "./src/navigation";
+import Navigation from "./src/router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "@utils/queryClient";
 import Toast from "react-native-toast-message";

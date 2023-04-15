@@ -5,7 +5,6 @@ import { faDollar } from "@fortawesome/free-solid-svg-icons/faDollar";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 import { faFilter } from "@fortawesome/free-solid-svg-icons/faFilter";
 import { faLayerGroup } from "@fortawesome/free-solid-svg-icons/faLayerGroup";
-import { faComment } from "@fortawesome/free-solid-svg-icons/faComment";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faMapLocationDot } from "@fortawesome/free-solid-svg-icons/faMapLocationDot";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons/faCartShopping";
@@ -19,12 +18,23 @@ import { faPeopleCarry } from "@fortawesome/free-solid-svg-icons/faPeopleCarry";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
 import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons/faArrowUpFromBracket";
 import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
+import { faCar } from "@fortawesome/free-solid-svg-icons/faCar";
+import { faBuilding } from "@fortawesome/free-solid-svg-icons/faBuilding";
+import { faShirt } from "@fortawesome/free-solid-svg-icons/faShirt";
+import { faTv } from "@fortawesome/free-solid-svg-icons/faTv";
+import { faMobileScreenButton } from "@fortawesome/free-solid-svg-icons/faMobileScreenButton";
+import { faLaptop } from "@fortawesome/free-solid-svg-icons/faLaptop";
+import { faFutbol } from "@fortawesome/free-solid-svg-icons/faFutbol";
+import { faCouch } from "@fortawesome/free-solid-svg-icons/faCouch";
+import { faFilm } from "@fortawesome/free-solid-svg-icons/faFilm";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons/faGamepad";
+import { faPlay } from "@fortawesome/free-solid-svg-icons/faPlay";
 
 export const ICONS = {
-  HOME_SCREEN: faHouse,
-  SELL_SCREEN: faDollar,
-  HUB_SCREEN: faLayerGroup,
-  PROFILE_SCREEN: faUser,
+  Home: faHouse,
+  Sell: faDollar,
+  Hub: faLayerGroup,
+  Profile: faUser,
   SEARCH_BAR: faMagnifyingGlass,
   SEARCH_FILTER: faFilter,
   ADD_PRODUCT_SCREEN: faPlus,
@@ -41,4 +51,15 @@ export const ICONS = {
   SHARE: faArrowUpFromBracket,
   HEART: faHeart,
   EYE: faEye,
+  CAR: faCar,
+  REALESTATE: faBuilding,
+  FASHION: faShirt,
+  HIFI: faTv,
+  PHONE: faMobileScreenButton,
+  TECH: faLaptop,
+  SPORT: faFutbol,
+  APPLIANCE: faCouch,
+  MEDIA: faFilm,
+  VIDEOGAME: faGamepad,
+  LIVE: faPlay,
 };

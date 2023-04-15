@@ -25,8 +25,7 @@ export const PandaBottomSheet = React.forwardRef<BottomSheet, BottomSheetProps>(
         snapPoints={props.snapPoints}
         enablePanDownToClose={true}
         index={-1}
-        style={styles.container}
-        backgroundStyle={{ backgroundColor: Colors.dark[900] }}
+        backgroundStyle={{ backgroundColor: Colors.dark[800] }}
         handleIndicatorStyle={{ backgroundColor: "white" }}
         backdropComponent={renderBackdrop}
       >
@@ -39,8 +38,5 @@ export const PandaBottomSheet = React.forwardRef<BottomSheet, BottomSheetProps>(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  contentContainer: {
-    padding: 20,
   },
 });

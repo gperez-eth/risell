@@ -2,7 +2,7 @@ const tintColorLight = "#2f95dc";
 const tintColorDark = "#fff";
 
 export default {
-  primary: "#48BF46",
+  primary: "#0066FF",
   defaultButton: "#0066FF",
   routeFocused: "#007CFF",
   error: "#FF0000",

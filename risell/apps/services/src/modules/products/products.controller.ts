@@ -48,4 +48,10 @@ export class ProductsController {
     this.sharedService.acknowledgeMessage(context);
     return await this.productService.getProductInfo(data);
   }
+
+  @MessagePattern({ cmd: 'ms-get-categories' })
+  async getCategories(@Ctx() context: RmqContext) {
+    this.sharedService.acknowledgeMessage(context);
+    return await this.productService.getCategories();
+  }
 }

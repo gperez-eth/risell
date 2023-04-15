@@ -1,21 +1,24 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { PandaBidBar, PandaSwiper } from "@components/molecules";
+import {
+  PandaBidBar,
+  PandaSwiper,
+  PandaSellerHeader,
+  PandaPayerBottom,
+} from "@components/molecules";
 import { PandaText } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
-import { PandaSellerHeader } from "@components/molecules/PandaSellerHeader/PandaSellerHeader";
 import dayjs from "dayjs";
 import { PandaIcon, PandaToggle } from "@components/atoms";
 import { ICONS } from "@utils/constants/Icons";
-import { PandaPayerBottom } from "@components/molecules/PandaPayerBottom/PandaPayerBottom";
 import { useFetchProduct } from "hooks/useProduct";
 import { ProductDataProps } from "@utils/Types/ProductData";
 import { FlashList } from "@shopify/flash-list";
 import { ScrollView } from "react-native-gesture-handler";
-import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { PandaBottomSheet } from "@components/organisms";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
-import { BidScreen } from "../BidScreen/BidScreen";
+import { BidScreen } from "@components/templates";
 
 type DefaultProductScreenProps = {
   navigation: any;

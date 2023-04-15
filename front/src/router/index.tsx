@@ -7,12 +7,17 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 
-import { NAV_SCREENS } from "@utils/constants/Navigation";
-import { HomeScreen } from "@screens";
+import {
+  HomeScreen,
+  ProductScreen,
+  SearchScreen,
+  SellScreen,
+  UploadScreen,
+} from "@screens/index";
 import { PandaTabBar } from "@components/molecules";
 
+import { BottomTabNavigatorParamList, RootStackParamList } from "./types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { ProductScreen, SearchScreen } from "@screens/index";
 
 export default function Navigation({ colorScheme }) {
   return (
@@ -25,7 +30,7 @@ export default function Navigation({ colorScheme }) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
@@ -45,39 +50,44 @@ function RootNavigator() {
         <Stack.Screen name="Search" component={SearchScreen} />
         <Stack.Screen name="Product" component={ProductScreen} />
       </Stack.Group>
+      <Stack.Group
+        screenOptions={{ presentation: "formSheet", headerShown: false }}
+      >
+        <Stack.Screen name="Upload" component={UploadScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<BottomTabNavigatorParamList>();
 
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       id="tabs"
-      initialRouteName={NAV_SCREENS.HOME}
+      initialRouteName="Home"
       screenOptions={{ headerShown: false, tabBarHideOnKeyboard: true }}
       tabBar={(props) => <PandaTabBar {...props} />}
     >
       <BottomTab.Screen
-        name={NAV_SCREENS.HOME}
+        name="Home"
         options={{ tabBarLabel: "Home" }}
         component={HomeScreen}
       />
       <BottomTab.Screen
-        name={NAV_SCREENS.SELL}
+        name="Sell"
         options={{
           tabBarLabel: "Sell",
         }}
-        component={SearchScreen}
+        component={SellScreen}
       />
       <BottomTab.Screen
-        name={NAV_SCREENS.HUB}
+        name="Hub"
         options={{ tabBarLabel: "Hub" }}
         component={SearchScreen}
       />
       <BottomTab.Screen
-        name={NAV_SCREENS.PROFILE}
+        name="Profile"
         options={{ tabBarLabel: "Profile" }}
         component={SearchScreen}
       />

@@ -1,5 +1,5 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { Product } from '@app/shared';
+import { Category, Product } from '@app/shared';
 import { Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -41,6 +41,16 @@ export class ProductsResolver {
         cmd: 'ms-get-product',
       },
       { ...args },
+    );
+  }
+
+  @Query((returns) => [Category], { name: 'categories' })
+  getCategories() {
+    return this.productService.send(
+      {
+        cmd: 'ms-get-categories',
+      },
+      {},
     );
   }
 }

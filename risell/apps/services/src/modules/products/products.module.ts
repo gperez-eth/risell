@@ -13,6 +13,8 @@ import {
   Bid,
   Auction,
   User,
+  Category,
+  CategoryRepository,
 } from '@app/shared';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
@@ -32,6 +34,7 @@ import { ProductsController } from './products.controller';
       Bid,
       Auction,
       User,
+      Category,
     ]),
   ],
   controllers: [ProductsController],
@@ -43,6 +46,10 @@ import { ProductsController } from './products.controller';
     {
       provide: 'ProductsRepositoryInterface',
       useClass: ProductsRepository,
+    },
+    {
+      provide: 'CategoriesRepositoryInterface',
+      useClass: CategoryRepository,
     },
     {
       provide: 'SharedServiceInterface',

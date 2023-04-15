@@ -1,6 +1,6 @@
 export const NAV_SCREENS = {
-  HOME: "HOME_SCREEN",
-  HUB: "HUB_SCREEN",
-  PROFILE: "PROFILE_SCREEN",
-  SELL: "SELL_SCREEN",
+  HOME: "HOME",
+  HUB: "HUB",
+  PROFILE: "PROFILE",
+  SELL: "SELL",
 };

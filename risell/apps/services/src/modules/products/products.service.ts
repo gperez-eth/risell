@@ -1,4 +1,6 @@
 import {
+  Category,
+  CategoryRepositoryInterface,
   NearestProductsQueryDto,
   PaginationQueryDto,
   Product,
@@ -12,6 +14,8 @@ export class ProductsService {
   constructor(
     @Inject('ProductsRepositoryInterface')
     private readonly productRepository: ProductRepositoryInterface,
+    @Inject('CategoriesRepositoryInterface')
+    private readonly categoryRepository: CategoryRepositoryInterface,
   ) {}
 
   async getNearestProducts({
@@ -57,5 +61,9 @@ export class ProductsService {
       },
       relations: ['images', 'user', 'currency', 'auction.bids.user'],
     });
+  }
+
+  async getCategories(): Promise<Category[]> {
+    return await this.categoryRepository.findAll();
   }
 }

@@ -13,6 +13,7 @@ import { Auction } from './auction.entity';
 import { Currency } from './currency.entity';
 import { ProductImages } from './product-images.entity';
 import { User } from './user.entinty';
+import { Category } from './category.entity';
 
 @ObjectType()
 @Entity('products')
@@ -56,6 +57,10 @@ export class Product {
   @Field(() => Currency)
   @ManyToOne(() => Currency, (currency) => currency.products)
   currency: Currency;
+
+  @Field(() => Category)
+  @ManyToOne(() => Category, (category) => category.products)
+  category: Category;
 
   @Field(() => Auction, { nullable: true })
   @OneToOne(() => Auction)

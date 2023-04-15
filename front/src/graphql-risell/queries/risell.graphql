@@ -62,3 +62,11 @@ query addNewBid($auctionId: String!, $userId: String!, $bidAmount: Int!) {
     id
   }
 }
+
+query getCategories {
+  categories {
+    id
+    name
+    icon
+  }
+}
