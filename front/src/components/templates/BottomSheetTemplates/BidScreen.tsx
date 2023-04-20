@@ -122,7 +122,7 @@ export function BidScreen({ ...props }: BidScreenProps) {
             {calculateMinimumBidPrice(props.highestBid / 100).toLocaleString(
               "es-ES",
               { maximumFractionDigits: 2 },
-            )}{" "}
+            )}
             {props.currencySymbol})
           </PandaText>
         </Pressable>
@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
   setAmountButtonText: {
     fontSize: 12,
     fontFamily: "Montserrat-SemiBold",
-    marginTop: 10,
   },
   bidButton: {
     marginTop: "auto",

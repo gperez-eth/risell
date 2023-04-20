@@ -4,6 +4,7 @@ import { PandaText, PandaView } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaButton } from "@components/atoms/PandaButton/PandaButton";
 import PandaCountdown from "@components/atoms/PandaCountdown/PandaCountdown";
+import useColorScheme from "hooks/useColorScheme";
 
 type PandaPayerBottomProps = {
   onBid: (index: number) => void;
@@ -17,6 +18,7 @@ type PandaPayerBottomProps = {
 };
 
 export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
+  const theme = useColorScheme();
   function renderTypeBottom() {
     if (props.payInfo.isAuction) {
       return (
@@ -44,7 +46,7 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
             >
               <PandaButton
                 style={{ flexGrow: 1, marginRight: 10 }}
-                color={Colors.dark[100]}
+                color="#333333"
                 pressAction={() => props.onBid(0)}
               >
                 <PandaText
@@ -60,7 +62,13 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
                 color={Colors.primary}
                 pressAction={() => console.log("asdf")}
               >
-                <PandaText style={styles.buttonText}>Buy Now</PandaText>
+                <PandaText
+                  darkColor={Colors.light[100]}
+                  lightColor={Colors.light[100]}
+                  style={styles.buttonText}
+                >
+                  Buy Now
+                </PandaText>
               </PandaButton>
             </View>
           ) : (
@@ -82,9 +90,15 @@ export function PandaPayerBottom({ ...props }: PandaPayerBottomProps) {
   return (
     <PandaView
       darkColor={Colors.dark[900]}
-      lightColor={Colors.light.pandaPayerBottom}
+      lightColor={Colors.light[100]}
       shadow
-      style={[styles.container]}
+      style={[
+        {
+          borderTopColor:
+            theme == "dark" ? Colors.dark[700] : Colors.light[400],
+        },
+        styles.container,
+      ]}
     >
       {renderTypeBottom()}
     </PandaView>
@@ -99,7 +113,6 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderTopColor: Colors.dark[700],
   },
   auctionContainer: {},
   infoGroup: {

@@ -2,22 +2,23 @@ import React from "react";
 import { PandaIcon } from "@components/atoms";
 import { Pressable, StyleSheet, Platform, Text, View } from "react-native";
 import { ICONS } from "@utils/constants/Icons";
-import { BlurView } from "@react-native-community/blur";
+import { BlurView } from "expo-blur";
 import Colors from "@utils/constants/Colors";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
 } from "react-native-reanimated";
+import useColorScheme from "hooks/useColorScheme";
 export function PandaTabBar({ state, descriptors, navigation }) {
   const focusedRoute = state.routes[state.index];
   const focusedDescriptor = descriptors[focusedRoute.key];
   const focusedOptions = focusedDescriptor.options;
-
+  const theme = useColorScheme();
   return (
     <BlurView
-      blurType="dark"
-      blurAmount={10}
+      tint={theme}
+      intensity={100}
       style={[styles.container, focusedOptions.tabBarStyle]}
     >
       {state.routes.map((route, index) => {

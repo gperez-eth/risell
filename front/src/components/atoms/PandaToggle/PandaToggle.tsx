@@ -11,17 +11,23 @@ type PandaToggleProps = {
 
 export function PandaToggle({ ...props }: PandaToggleProps) {
   return (
-    <PandaView darkColor={Colors.dark[800]} style={styles.container}>
+    <PandaView
+      darkColor={Colors.dark[800]}
+      lightColor={Colors.light[300]}
+      style={styles.container}
+    >
       {props.options.map((option, index) => {
         return (
           <PandaPressable
             key={option.optionText}
             darkColor={option.isActive ? Colors.dark[900] : Colors.dark[800]}
+            lightColor={option.isActive ? Colors.light[100] : Colors.light[300]}
             customStyle={[styles.button]}
             onPress={() => props.onChangeMenuOption(index)}
           >
             <PandaText
               darkColor={option.isActive ? Colors.dark[100] : Colors.dark[400]}
+              lightColor={option.isActive ? Colors.dark[900] : Colors.dark[400]}
               style={styles.optionText}
             >
               {option.optionText}

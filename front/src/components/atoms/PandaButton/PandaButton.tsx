@@ -20,7 +20,7 @@ export function PandaButton({ ...props }: PandaButtonProps) {
   return (
     <PandaPressable
       darkColor={props.disabled ? Colors.dark[800] : Colors.dark[100]}
-      lightColor={Colors.dark[900]}
+      lightColor={props.disabled ? Colors.dark[800] : Colors.dark[900]}
       disabled={props.disabled}
       customStyle={[
         styles.button,

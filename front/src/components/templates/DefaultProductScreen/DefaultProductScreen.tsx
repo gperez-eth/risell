@@ -209,11 +209,12 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 15,
   },
   productTitle: {
     fontSize: 20,
-    fontFamily: "Montserrat-SemiBold",
+    fontFamily: "Montserrat-Bold",
+    marginBottom: 10,
   },
   description: {
     fontSize: 15,

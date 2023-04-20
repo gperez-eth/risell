@@ -8,9 +8,11 @@ import { ICONS } from "@utils/constants/Icons";
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet";
 import { PandaBottomSheet } from "@components/organisms";
 import { SelectCategorySheet } from "@components/templates/BottomSheetTemplates/SelectCategorySheet";
+import useColorScheme from "hooks/useColorScheme";
 
 export function SellScreen({ navigation, ...props }) {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const theme = useColorScheme();
 
   return (
     <PandaView
@@ -19,6 +21,7 @@ export function SellScreen({ navigation, ...props }) {
       darkColor={Colors.dark[900]}
     >
       <PandaButton
+        shadow
         style={styles.addProductButton}
         color={Colors.defaultButton}
         pressAction={() => bottomSheetRef.current.snapToIndex(0)}
@@ -29,7 +32,15 @@ export function SellScreen({ navigation, ...props }) {
           color={Colors.dark[100]}
         />
       </PandaButton>
-      <PandaBottomSheet ref={bottomSheetRef} snapPoints={["75%"]}>
+      <PandaBottomSheet
+        ref={bottomSheetRef}
+        snapPoints={["75%"]}
+        backgroundStyle={
+          theme == "dark"
+            ? { backgroundColor: Colors.dark[800] }
+            : { backgroundColor: Colors.light[100] }
+        }
+      >
         <SelectCategorySheet />
       </PandaBottomSheet>
     </PandaView>
@@ -50,4 +61,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  darkBottomSheet: {},
 });

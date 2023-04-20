@@ -91,7 +91,10 @@ export function PandaPressable(props: PandaPressableProps) {
 
   return (
     <DefaultPressable
-      style={[{ backgroundColor }, customStyle]}
+      style={({ pressed }) => [
+        { backgroundColor, opacity: pressed ? 0.8 : 1 },
+        customStyle,
+      ]}
       {...otherProps}
     />
   );

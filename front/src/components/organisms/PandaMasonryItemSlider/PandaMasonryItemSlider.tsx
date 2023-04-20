@@ -22,6 +22,7 @@ export function PandaMasonryItemSlider({
         style={({ pressed }) => [
           {
             opacity: pressed ? 0.5 : 1,
+            paddingBottom: 10,
           },
           columnIndex % 2 === 0
             ? styles.leftColumnPadding
@@ -45,13 +46,6 @@ export function PandaMasonryItemSlider({
         contentContainerStyle={styles.list}
         centerContent
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => (
-          <View
-            style={{
-              height: 15,
-            }}
-          />
-        )}
       />
     </View>
   );
@@ -63,7 +57,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get("screen").height,
   },
   list: {
-    paddingBottom: 100,
+    paddingBottom: 120,
     paddingTop: 200,
   },
   leftColumnPadding: {

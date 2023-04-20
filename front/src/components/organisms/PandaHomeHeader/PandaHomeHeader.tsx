@@ -2,12 +2,15 @@ import { PandaPillList } from "@components/molecules";
 import Colors from "@utils/constants/Colors";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
+import useColorScheme from "hooks/useColorScheme";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 type PandaHomeHeaderProps = {};
 
 export function PandaHomeHeader({ ...props }: PandaHomeHeaderProps) {
+  const theme = useColorScheme();
+
   const optionsMenuDefault = [
     { optionText: "Near you", isActive: false },
     { optionText: "New", isActive: false },
@@ -28,7 +31,7 @@ export function PandaHomeHeader({ ...props }: PandaHomeHeaderProps) {
   }, []);
 
   return (
-    <BlurView tint="dark" intensity={100} style={[styles.headerContainer]}>
+    <BlurView tint={theme} intensity={100} style={[styles.headerContainer]}>
       <Image
         style={[styles.logo]}
         source={{
@@ -55,8 +58,6 @@ const styles = StyleSheet.create({
     paddingTop: 70,
     paddingBottom: 20,
     marginBottom: 10,
-    borderBottomColor: Colors.dark[700],
-    borderBottomWidth: 1,
     alignItems: "center",
     position: "absolute",
     marginTop: "auto",

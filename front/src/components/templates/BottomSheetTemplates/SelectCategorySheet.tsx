@@ -1,42 +1,67 @@
 import { PandaText, PandaView } from "@components/Themed";
 import { PandaCategorySelector } from "@components/molecules";
+import { useBottomSheet } from "@gorhom/bottom-sheet";
+import { Category } from "@graphql/__generated__/risell";
 import { useNavigation } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 import Colors from "@utils/constants/Colors";
 import { useFetchCategories } from "hooks/useCategories";
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import { UploadScreenNavigationProp } from "router/types";
 
 type SelectCategorySheetProps = {};
 
 export function SelectCategorySheet({ ...props }: SelectCategorySheetProps) {
-  const navigation = useNavigation<any>();
+  const { close } = useBottomSheet();
+  const navigation = useNavigation<UploadScreenNavigationProp>();
   const { data: categories, isLoading, isSuccess } = useFetchCategories();
+
+  const liveShoppingCategory = {
+    id: "live",
+    icon: "LIVE",
+    name: "Start a streaming",
+  };
+
+  const onPressCategory = (item: Category) => {
+    navigation.navigate("Upload", { category: item });
+    close();
+  };
 
   const renderCategorySelector = ({ item }) => {
     return (
-      <Pressable
-        onPress={() => navigation.navigate("Upload", { category: item })}
-      >
-        <PandaCategorySelector category={item} />
-      </Pressable>
+      <PandaCategorySelector
+        category={item}
+        pressAction={() => onPressCategory(item)}
+      />
     );
   };
 
   return (
     <View style={styles.container}>
       <PandaText style={styles.titleHeader}>Select a category</PandaText>
-      <PandaView style={styles.containerSubHeader} darkColor={Colors.primary}>
-        <PandaText style={styles.titleSubHeader}>Live Shopping</PandaText>
-      </PandaView>
-      <View style={{ paddingHorizontal: 20, paddingVertical: 5 }}>
+      <PandaText
+        darkColor={Colors.light[100]}
+        lightColor={Colors.dark[900]}
+        style={styles.titleSubHeader}
+      >
+        Live
+      </PandaText>
+      <View style={{ marginBottom: 20 }}>
         <PandaCategorySelector
-          category={{ id: "live", icon: "LIVE", name: "Start a streaming" }}
+          pressAction={() =>
+            navigation.navigate("Upload", { category: liveShoppingCategory })
+          }
+          category={liveShoppingCategory}
         />
       </View>
-      <PandaView style={styles.containerSubHeader} darkColor={Colors.primary}>
-        <PandaText style={styles.titleSubHeader}>Single product</PandaText>
-      </PandaView>
+      <PandaText
+        darkColor={Colors.light[100]}
+        lightColor={Colors.dark[900]}
+        style={styles.titleSubHeader}
+      >
+        Single product
+      </PandaText>
       <View style={{ height: 400 }}>
         <FlashList
           data={categories}
@@ -52,27 +77,22 @@ export function SelectCategorySheet({ ...props }: SelectCategorySheetProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 15,
   },
   titleHeader: {
     fontFamily: "Montserrat-Bold",
-    fontSize: 20,
-    marginBottom: 15,
+    fontSize: 25,
+    marginBottom: 25,
     paddingTop: 10,
-    color: "#FFFFFF",
-    paddingHorizontal: 20,
-  },
-  containerSubHeader: {
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    marginLeft: 10,
   },
   titleSubHeader: {
     fontFamily: "Montserrat-Bold",
-    fontSize: 13,
-    color: "#FFFFFF",
+    fontSize: 20,
+    marginLeft: 10,
+    marginBottom: 10,
   },
   contentList: {
-    paddingBottom: 100,
-    paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingBottom: 120,
   },
 });

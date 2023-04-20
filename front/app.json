@@ -16,9 +16,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.xguize.risell"
@@ -31,8 +29,17 @@
       },
       "package": "com.xguize.risell"
     },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "risell",
+            "project": "risell",
+            "authToken": "1dd7d574cf614043936bc55301cb6b7615b5d85af10f46f8a82b7bdd189d9c68"
+          }
+        }
+      ]
     },
     "plugins": [
       [
@@ -42,7 +49,8 @@
             "flipper": true
           }
         }
-      ]
+      ],
+      "sentry-expo"
     ]
   }
 }
