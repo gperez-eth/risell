@@ -8,7 +8,7 @@ import { Category } from "@graphql/__generated__/risell";
 import useColorScheme from "hooks/useColorScheme";
 
 type PandaCategorySelectorProps = {
-  category: Category;
+  category: Category | { icon: string; name: string };
   pressAction: () => void;
 };
 

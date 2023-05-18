@@ -30,6 +30,8 @@ import { faFilm } from "@fortawesome/free-solid-svg-icons/faFilm";
 import { faGamepad } from "@fortawesome/free-solid-svg-icons/faGamepad";
 import { faPlay } from "@fortawesome/free-solid-svg-icons/faPlay";
 import { faImage } from "@fortawesome/free-solid-svg-icons/faImage";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
+import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 
 export const ICONS = {
   Home: faHouse,
@@ -64,4 +66,6 @@ export const ICONS = {
   VIDEOGAME: faGamepad,
   LIVE: faPlay,
   IMAGE: faImage,
+  RIGHT_INDICATOR: faChevronRight,
+  CHECK: faCheck,
 };

@@ -7,18 +7,18 @@ import {
   StyleProp,
   TextStyle,
 } from "react-native";
-import { MasonryFlashList } from "@shopify/flash-list";
-import { PandaProductCard } from "@components/molecules";
-import { GetProductsQuery } from "@graphql/__generated__/risell";
-import { ProductCardProps } from "@utils/Types";
-import { Dimensions } from "react-native";
 import { PandaText } from "@components/Themed";
 import Colors from "@utils/constants/Colors";
 import { PandaIcon } from "@components/atoms";
 import { ICONS } from "@utils/constants/Icons";
+import { FlashList } from "@shopify/flash-list";
+import { PandaPhotoThumbnail } from "@components/molecules/PandaPhotoThumbnail/PandaPhotoThumbnail";
+import { ImagePickerAsset } from "expo-image-picker";
 
 type PandaPhotoUploaderProps = {
+  pressAction: () => void;
   style: StyleProp<TextStyle>;
+  images: ImagePickerAsset[];
 };
 
 export function PandaPhotoUploader({ ...props }: PandaPhotoUploaderProps) {
@@ -30,6 +30,7 @@ export function PandaPhotoUploader({ ...props }: PandaPhotoUploaderProps) {
           styles.container,
           props.style,
         ]}
+        onPress={props.pressAction}
       >
         <PandaIcon
           icon={ICONS.IMAGE}
@@ -47,7 +48,27 @@ export function PandaPhotoUploader({ ...props }: PandaPhotoUploaderProps) {
     );
   };
 
-  return renderEmptyPhotoContainer();
+  const separatorItem = () => {
+    return <View style={{ marginLeft: 10, width: 10 }}></View>;
+  };
+
+  const renderImageList = () => {
+    return (
+      <View style={[{ height: 100, width: "100%", marginTop: 20 }]}>
+        <FlashList
+          data={props.images}
+          renderItem={({ item }) => <PandaPhotoThumbnail uri={item.uri} />}
+          estimatedItemSize={100}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 20 }}
+          ItemSeparatorComponent={separatorItem}
+        />
+      </View>
+    );
+  };
+
+  return props.images ? renderImageList() : renderEmptyPhotoContainer();
 }
 
 const styles = StyleSheet.create({

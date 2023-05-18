@@ -17,6 +17,7 @@ import {
   ErrorToast as DefaultErrorToast,
   BaseToastProps,
 } from "react-native-toast-message";
+import { TextInput as DefaultTextInput } from "react-native-gesture-handler";
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -41,6 +42,7 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
+export type TextInputProps = ThemeProps & DefaultTextInput["props"];
 export type SafeAreaProps = ThemeProps & DefaultView["props"];
 export type PandaPressableProps = ThemeProps & PressableProps;
 export type ToastProps = ThemeProps & BaseToastProps;
@@ -121,5 +123,25 @@ export function PandaErrorToast(props: ToastProps) {
 
   return (
     <DefaultErrorToast style={[{ backgroundColor }, style]} {...otherProps} />
+  );
+}
+
+export function PandaInput(props: TextInputProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  const color = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  return (
+    <DefaultTextInput
+      style={[{ backgroundColor, color }, style]}
+      {...otherProps}
+    />
   );
 }
